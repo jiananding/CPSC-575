@@ -31,21 +31,15 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         photo.image = info[.originalImage] as? UIImage
     }
     
-
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-//        let photo = UIImagePickerController()
-//        photo.delegate = self
-//        photo.sourceType = UIImagePickerController.SourceType.camera
-//        photo.allowsEditing = true
-//        self.present(photo, animated: true){}
+        setUp()
     }
     
-    
-
-
+    func setUp(){
+        takePhotoButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        takePhotoButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        takePhotoButton.layer.cornerRadius = takePhotoButton.frame.size.width/2
+    }
 }
 
