@@ -72,6 +72,17 @@ class ViewController: UIViewController, UITextFieldDelegate{
         equation_text_field.text?.append("/ ")
     }
 
+    @IBAction func delete_action(_ sender: Any) {
+        var text = equation_text_field.text?.split(separator: " ")
+        if text!.count >= 1 {
+            text?.removeLast()
+            var full_text = text?.joined(separator: " ")
+            full_text?.append(" ")
+            equation_text_field.text = full_text
+            calculation()
+        }
+    }
+
     func read() {
         let requestHandler = VNImageRequestHandler(data: picked_image.pngData()!, options: [:])
         let request = VNRecognizeTextRequest { (request, error) in
@@ -165,7 +176,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
             let expression_result = expression.expressionValue(with: nil, context: nil) as! NSNumber
             result.text = expression_result.stringValue
         } else {
-            print("Invaild expression")
+            result.text = "Error"
         }
     }
     
@@ -200,8 +211,8 @@ class ViewController: UIViewController, UITextFieldDelegate{
                         return false
                     }
                 } else {
-                    if ((arr[i-1] == "*" || arr[i-1] == "/" || arr[i-1] == "+" || arr[i-1] == "-") && (arr[i+1] == "*" || arr[i+1] == "/" || arr[i+1] == "+" || arr[i+1] == "-")) {
-                        continue
+                    if ((arr[i-1] != "*" && arr[i-1] != "/" && arr[i-1] != "+" && arr[i-1] != "-") || (arr[i+1] != "*" && arr[i+1] != "/" && arr[i+1] != "+" && arr[i+1] != "-")) {
+                        return false
                     }
                 }
             }
