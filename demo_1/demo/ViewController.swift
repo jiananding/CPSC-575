@@ -159,10 +159,54 @@ class ViewController: UIViewController, UITextFieldDelegate{
     }
     
     func calculation() {
-        let numericExpression = equation_text_field.text
-        let expression = NSExpression(format: numericExpression!)
-        let expression_result = expression.expressionValue(with: nil, context: nil) as! NSNumber
-        result.text = expression_result.stringValue
+        if checkRight(equation_text_field.text!) {
+            let numericExpression = equation_text_field.text
+            let expression = NSExpression(format: numericExpression!)
+            let expression_result = expression.expressionValue(with: nil, context: nil) as! NSNumber
+            result.text = expression_result.stringValue
+        } else {
+            print("Invaild expression")
+        }
+    }
+    
+    func checkRight(_ expression: String) -> Bool {
+        let arr = expression.split(separator: " ")
+        let le = arr.count
+        // the first place cannot be the operator except minus operator and the last place cannot be the operator either.
+        if (le == 0) {
+            return false
+        } else if (le == 1) {
+            if (arr[0] == "*" || arr[0] == "/" || arr[0] == "+" ) {
+                return false
+            }
+        } else if (le == 2) { //the first place must be minus operator
+            if (arr[0] == "-"){
+                if (arr[le - 1] == "*" || arr[le - 1] == "/" || arr[le - 1] == "-" || arr[le - 1] == "+") {
+                    return false
+                }
+            } else {
+                return false
+            }
+        } else if (le >= 3) {
+            if (arr[le - 1] == "+" || arr[le - 1] == "-" || arr[le - 1] == "*" || arr[le - 1] == "/") {
+                return false
+            }
+            if (arr[0] == "+" || arr[0] == "*" || arr[0] == "/") {
+                return false
+            }
+            for i in 1..<(le-1) {
+                if (arr[i] == "*" || arr[i] == "/" || arr[i] == "+" || arr[i] == "-") {
+                    if (arr[i-1] == "*" || arr[i-1] == "/" || arr[i-1] == "+" || arr[i-1] == "-" || arr[i+1] == "*" || arr[i+1] == "/" || arr[i+1] == "+" || arr[i+1] == "-") {
+                        return false
+                    }
+                } else {
+                    if ((arr[i-1] == "*" || arr[i-1] == "/" || arr[i-1] == "+" || arr[i-1] == "-") && (arr[i+1] == "*" || arr[i+1] == "/" || arr[i+1] == "+" || arr[i+1] == "-")) {
+                        continue
+                    }
+                }
+            }
+        }
+        return true
     }
 }
 

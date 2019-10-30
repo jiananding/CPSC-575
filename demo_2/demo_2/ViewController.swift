@@ -21,17 +21,35 @@ class ViewController: UIViewController{
     let image_picker = UIImagePickerController()
     
     var imageView: UIImageView = UIImageView.init(image: UIImage.init(named: "hello"))
-    
+    var touch_location: CGPoint = CGPoint(x: 0.0, y: 0.0)
   
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         text_image.image = picked_image
         image_picker.delegate = self
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan")
-        self.text_image.addGestureRecognizer(gestureRecognizer)
-   }
+
+        // gesture sample: swipe, pan, pinch, rotate
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwip(sender:)))
+        rightSwipe.direction = .right
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwip(sender:)))
+        leftSwipe.direction = .left
+        
+        let pinchMethod = UIPinchGestureRecognizer(target: self, action: #selector(pinchImage(sender:)))
+        
+        let panMethod = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender:)))
+        
+//        rightSwipe.require(toFail: panMethod)
+//        leftSwipe.require(toFail: panMethod)
+//        panMethod.require(toFail: rightSwipe)
+//        panMethod.require(toFail: leftSwipe)
+        
+        text_image.isUserInteractionEnabled = true
+        text_image.addGestureRecognizer(rightSwipe)
+        text_image.addGestureRecognizer(leftSwipe)
+        text_image.addGestureRecognizer(pinchMethod)
+        text_image.addGestureRecognizer(panMethod)
+    }
 
     @IBAction func select_photo(_ sender: Any) {
         text_result.text = "Result: "
@@ -94,19 +112,65 @@ class ViewController: UIViewController{
     // screen touch position (first touch position)
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            //print(touch.location(in: view))
+            print(touch.location(in: view))
+            touch_location = touch.location(in: view)
+            // do crop image here
+            crop_image(location: touch_location)
+        }
+    }
+
+    // siwpe gesture handling
+    @objc func handleSwip(sender: UISwipeGestureRecognizer) {
+        if sender.state == .ended {
+            switch sender.direction {
+            case .right:
+                view.backgroundColor = .red
+            case .left:
+                view.backgroundColor = .yellow
+            default:
+                break
+            }
         }
     }
     
-    func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
-        if gestureRecognizer.state == .began {
-            print(gestureRecognizer.translation(in: self.text_image))
-        }
-        
-        if gestureRecognizer.state == .changed {
-            print(gestureRecognizer.translation(in: self.text_image))
+    // zoom in or out for text image
+    @objc func pinchImage(sender: UIPinchGestureRecognizer) {
+        if let scale = (sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale)) {
+            guard scale.a > 1.0 else {return}
+            guard scale.d > 1.0 else {return}
+            sender.view?.transform = scale
+            sender.scale = 1.0
         }
     }
+    
+    // handle pan gesture
+    @objc func handlePan(sender: UIPanGestureRecognizer) {
+        let gview = sender.view
+        if sender.state == .began || sender.state == .changed {
+            let translation = sender.translation(in: gview?.superview)
+            gview?.center = CGPoint(x: (gview?.center.x)! + translation.x, y: (gview?.center.y)! + translation.y)
+            sender.setTranslation(CGPoint.zero, in: gview?.superview)
+        }
+    }
+    
+    func crop_image(location: CGPoint) {
+        var screen_shot: UIImage = take_shot()
+        let cg_image = screen_shot.cgImage!
+        let croppedCGImage = cg_image.cropping(to: CGRect(x: location.x, y: location.y, width: 50, height: 50))
+    }
+    
+    func take_shot() -> UIImage {
+        var image: UIImage?
+        let currentLayer = UIApplication.shared.keyWindow!.layer
+        let currentScale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(currentLayer.frame.size, false, currentScale)
+        guard let currentContext = UIGraphicsGetCurrentContext() else {return image!}
+        currentLayer.render(in: currentContext)
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+    
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
