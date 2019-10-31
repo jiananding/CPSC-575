@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		863F0AFD236A800F00A2F5C5 /* picViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863F0AFC236A800F00A2F5C5 /* picViewController.swift */; };
 		864AF4B9236A3DD100575088 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 864AF4B8236A3DD100575088 /* icon.png */; };
 		86A9A8A523692BB600852476 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A9A8A423692BB600852476 /* AppDelegate.swift */; };
 		86A9A8A723692BB600852476 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A9A8A623692BB600852476 /* SceneDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		863F0AFC236A800F00A2F5C5 /* picViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = picViewController.swift; sourceTree = "<group>"; };
 		864AF4B8236A3DD100575088 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		86A9A8A123692BB600852476 /* camcat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = camcat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86A9A8A423692BB600852476 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				86A9A8A423692BB600852476 /* AppDelegate.swift */,
 				86A9A8A623692BB600852476 /* SceneDelegate.swift */,
 				86A9A8A823692BB600852476 /* ViewController.swift */,
+				863F0AFC236A800F00A2F5C5 /* picViewController.swift */,
 				86A9A8AA23692BB600852476 /* Main.storyboard */,
 				864AF4B8236A3DD100575088 /* icon.png */,
 				86A9A8AD23692BB700852476 /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86A9A8A923692BB600852476 /* ViewController.swift in Sources */,
+				863F0AFD236A800F00A2F5C5 /* picViewController.swift in Sources */,
 				86A9A8A523692BB600852476 /* AppDelegate.swift in Sources */,
 				86A9A8A723692BB600852476 /* SceneDelegate.swift in Sources */,
 			);

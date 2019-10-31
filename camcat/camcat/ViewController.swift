@@ -12,6 +12,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
 
     @IBOutlet var photo: UIImageView!
     @IBOutlet var takePhotoButton: UIButton!
+    @IBOutlet var checkButton: UIButton!
+    
+    let defaultUser = UserDefaults.standard
     
     
     @IBAction func takePhoto(_ sender: Any) {
@@ -29,16 +32,21 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         self.dismiss(animated: true, completion: nil)
         photo.image = info[.originalImage] as? UIImage
+        let imageData = photo.image?.pngData()
+        defaultUser.set(imageData, forKey: "photo data")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        if defaultUser.value(forKey: "photo data") != nil{
+            
+        }
     }
     
     func setUp(){
-        takePhotoButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        takePhotoButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        checkButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        checkButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         takePhotoButton.layer.cornerRadius = takePhotoButton.frame.size.width/2
     }
 }

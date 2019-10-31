@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yi7-H9-PjH">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
@@ -29,30 +29,96 @@
                                     <action selector="takePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GFF-G7-BNa"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bj-K2-cho">
+                                <rect key="frame" x="197" y="610" width="20" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="oVq-qV-C8b"/>
+                                    <constraint firstAttribute="height" constant="27" id="tFl-Ic-Ns8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" image="checkmark.circle.fill" catalog="system"/>
+                                <connections>
+                                    <segue destination="f2s-uw-9qv" kind="show" id="2gx-Bo-Epo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="WPA-8l-wmb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0aM-In-STn"/>
+                            <constraint firstItem="4bj-K2-cho" firstAttribute="top" secondItem="woU-m3-gbS" secondAttribute="bottom" constant="62" id="3Ph-Ii-k57"/>
                             <constraint firstItem="WPA-8l-wmb" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="J9i-R0-J4H"/>
                             <constraint firstItem="WPA-8l-wmb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PkE-21-uNC"/>
                             <constraint firstItem="woU-m3-gbS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Z7T-QJ-sbM"/>
                             <constraint firstItem="woU-m3-gbS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="crZ-gN-wt4"/>
+                            <constraint firstItem="4bj-K2-cho" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ej8-dv-TIC"/>
                             <constraint firstItem="WPA-8l-wmb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="rJn-f8-PJx"/>
                             <constraint firstAttribute="bottom" secondItem="WPA-8l-wmb" secondAttribute="bottom" id="sTU-Qt-ZXM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="vtN-nh-vco"/>
                     <connections>
+                        <outlet property="checkButton" destination="4bj-K2-cho" id="7PN-48-ttP"/>
                         <outlet property="photo" destination="WPA-8l-wmb" id="zrN-hr-iea"/>
                         <outlet property="takePhotoButton" destination="woU-m3-gbS" id="L5V-SX-8Lj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1047.8260869565217" y="112.5"/>
+        </scene>
+        <!--Pic View Controller-->
+        <scene sceneID="Mv7-gN-L3z">
+            <objects>
+                <viewController id="f2s-uw-9qv" customClass="picViewController" customModule="camcat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JOi-dL-UtR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iz9-NM-wRc">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="iz9-NM-wRc" firstAttribute="centerX" secondItem="JOi-dL-UtR" secondAttribute="centerX" id="9KO-sI-6Qz"/>
+                            <constraint firstItem="iz9-NM-wRc" firstAttribute="top" secondItem="JOi-dL-UtR" secondAttribute="top" id="BBt-Lx-jDG"/>
+                            <constraint firstItem="iz9-NM-wRc" firstAttribute="leading" secondItem="ttX-U3-Yc2" secondAttribute="leading" id="lwK-a0-wzH"/>
+                            <constraint firstItem="iz9-NM-wRc" firstAttribute="trailing" secondItem="ttX-U3-Yc2" secondAttribute="trailing" id="rJV-xi-G3Z"/>
+                            <constraint firstAttribute="bottom" secondItem="iz9-NM-wRc" secondAttribute="bottom" id="zvO-Ns-Pd8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ttX-U3-Yc2"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="1dH-08-DsE"/>
+                    <connections>
+                        <outlet property="photoTaken" destination="iz9-NM-wRc" id="uFP-hv-EI6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fnk-be-fiD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1797.1014492753625" y="112.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="LKP-RB-Chb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yi7-H9-PjH" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aVK-An-ahb">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="aDi-1P-doq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h2R-iG-xpl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark.circle.fill" catalog="system" width="64" height="62"/>
         <image name="icon.png" width="545.25" height="543"/>
     </resources>
 </document>
