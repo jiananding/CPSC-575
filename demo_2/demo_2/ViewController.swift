@@ -64,8 +64,8 @@ class ViewController: UIViewController{
         present(image_picker, animated: true, completion: nil)
     }
     
-    func read() {
-        let requestHandler = VNImageRequestHandler(data: text_image.image!.pngData()!, options: [:])
+    func read(image: UIImage) {
+        let requestHandler = VNImageRequestHandler(data: image.pngData()!, options: [:])
         let request = VNRecognizeTextRequest { (request, error) in
             guard let results = request.results as? [VNRecognizedTextObservation] else {return}
                 
@@ -85,7 +85,7 @@ class ViewController: UIViewController{
         request.revision = VNRecognizeTextRequestRevision1
         
         try? requestHandler.perform([request])
-        text_image.image = drawRectangleOnImage(image: self.text_image.image!)
+        //text_image.image = drawRectangleOnImage(image: self.text_image.image!)
     }
     
     
@@ -112,8 +112,8 @@ class ViewController: UIViewController{
     // screen touch position (first touch position)
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            print(touch.location(in: view))
-            touch_location = touch.location(in: view)
+            print(touch.location(in: self.view))
+            touch_location = touch.location(in: self.view)
             // do crop image here
             crop_image(location: touch_location)
         }
@@ -154,9 +154,10 @@ class ViewController: UIViewController{
     }
     
     func crop_image(location: CGPoint) {
-        var screen_shot: UIImage = take_shot()
+        let screen_shot: UIImage = take_shot()
         let cg_image = screen_shot.cgImage!
-        let croppedCGImage = cg_image.cropping(to: CGRect(x: location.x, y: location.y, width: 50, height: 50))
+        let croppedCGImage = cg_image.cropping(to: CGRect(x: location.x, y: location.y, width: 100, height: 100))!
+        read(image: UIImage(cgImage: croppedCGImage))
     }
     
     func take_shot() -> UIImage {
