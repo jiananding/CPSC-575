@@ -42,11 +42,16 @@
                                 <rect key="frame" x="20" y="70" width="374" height="498"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AKt-6J-XYh">
+                                <rect key="frame" x="90" y="630" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="croped_section" destination="AKt-6J-XYh" id="ZfA-EJ-BCT"/>
                         <outlet property="text_image" destination="sav-WE-TB6" id="8e3-6e-UQJ"/>
                         <outlet property="text_result" destination="FdJ-Ak-Hcd" id="z4e-5b-HIO"/>
                     </connections>
