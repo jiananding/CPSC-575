@@ -125,12 +125,35 @@ class ViewController: UIViewController, UITextFieldDelegate{
 
         for position in box_position {
             
-            let rectangle = CGRect(x: position.origin.x * imageSize.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height , width: position.width * imageSize.width, height: position.height * imageSize.height)
+            //let rectangle = CGRect(x: position.origin.x * imageSize.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height , width: position.width * imageSize.width, height: position.height * imageSize.height)
 
-            UIColor.cyan.setFill()
-            UIRectFill(rectangle)
+            //UIColor.cyan.setStroke()
+            //UIRectFill(rectangle)
+//            UIColor.black.set()
+//
+            let drawPath = UIBezierPath()
+            
+            // Starting point (left-up corner)
+            let leftUp = CGPoint(x: position.origin.x * imageSize.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height)
+            
+            // Right-up corner
+            let rightUp = CGPoint(x: position.origin.x * imageSize.width + imageSize.width * position.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height)
+            
+            // Right-down corner
+            let rightDown = CGPoint(x: position.origin.x * imageSize.width + imageSize.width * position.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height + position.height * imageSize.height)
+            
+            // Ending point (left-down corner)
+            let leftDown = CGPoint(x: position.origin.x * imageSize.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height + position.height * imageSize.height)
+            
+            drawPath.move(to: leftUp)
+            drawPath.addLine(to: rightUp)
+            drawPath.addLine(to: rightDown)
+            drawPath.addLine(to: leftDown)
+            drawPath.addLine(to: leftUp)
+            
+            UIColor.cyan.setStroke()
+            drawPath.stroke()
         }
-
         let newImage: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage!

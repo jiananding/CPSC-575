@@ -22,6 +22,10 @@ class ViewController: UIViewController{
     
     var imageView: UIImageView = UIImageView.init(image: UIImage.init(named: "hello"))
     var touch_location: CGPoint = CGPoint(x: 0.0, y: 0.0)
+    
+    // initial swipe point
+    var swipe_start: CGPoint = CGPoint(x: 0.0, y: 0.0)
+    var swipe_end: CGPoint = CGPoint(x:0.0, y: 0.0)
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,13 +116,31 @@ class ViewController: UIViewController{
     // screen touch position (first touch position)
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            print(touch.location(in: self.view))
+            print("touch began: \(touch.location(in: self.view))")
             touch_location = touch.location(in: self.view)
             // do crop image here
-            crop_image(location: touch_location)
+            //crop_image(location: touch_location)
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            //print("touch moved: \(touch.location(in: self.view))")
+            touch_location = touch.location(in: self.view)
+            // do crop image here
+            //crop_image(location: touch_location)
         }
     }
 
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            print("touch end: \(touch.location(in: self.view))")
+            touch_location = touch.location(in: self.view)
+            // do crop image here
+            //crop_image(location: touch_location)
+        }
+    }
+    
     // siwpe gesture handling
     @objc func handleSwip(sender: UISwipeGestureRecognizer) {
         if sender.state == .ended {
