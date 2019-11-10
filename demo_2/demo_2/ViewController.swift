@@ -116,8 +116,11 @@ class ViewController: UIViewController{
     // screen touch position (first touch position)
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            print("touch began: \(touch.location(in: self.view))")
-            swipe_start = touch.location(in: self.view)
+            print("touch began1: \(touch.location(in: text_image))")
+            swipe_start = touch.location(in: text_image)
+            swipe_start = (self.text_image?.convert(swipe_start, to: self.view))!
+            print("touch began2: \(touch.location(in: self.view))")
+
             // do crop image here
             //crop_image(location: touch_location)
         }
@@ -136,6 +139,7 @@ class ViewController: UIViewController{
         if let touch = touches.first {
             print("touch end: \(touch.location(in: self.view))")
             swipe_end = touch.location(in: self.view)
+            swipe_end.y -= 20
             // do crop image here
             crop_image()
         }
@@ -178,13 +182,13 @@ class ViewController: UIViewController{
     func crop_image() {
         let screen_shot: UIImage = take_shot()
         let cg_image = screen_shot.cgImage!
-        
-        var temp = CGRect(x: swipe_start.x, y: swipe_start.y - 50, width: abs(swipe_end.x - swipe_start.x), height: 100)
-        var croppedCGImage = cg_image.cropping(to: CGRect(x: swipe_start.x, y: swipe_start.y - 25, width: abs(swipe_end.x - swipe_start.x), height: 50))!
-        
-        croped_section.image = UIImage(cgImage: croppedCGImage)
-        
-        //read(image: UIImage(cgImage: croppedCGImage))
+    
+        if swipe_start != swipe_end {
+            var temp = CGRect(x: swipe_start.x, y: swipe_start.y - 50, width: abs(swipe_end.x - swipe_start.x), height: 100)
+            let croppedCGImage = cg_image.cropping(to: CGRect(x: swipe_start.x, y: swipe_start.y - 25, width: abs(swipe_end.x - swipe_start.x), height: 50))!
+            croped_section.image = UIImage(cgImage: croppedCGImage)
+            //read(image: UIImage(cgImage: croppedCGImage))
+        }
     }
     
     func take_shot() -> UIImage {
