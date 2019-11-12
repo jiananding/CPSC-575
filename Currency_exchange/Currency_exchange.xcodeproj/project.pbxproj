@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC101CEE237B581800D06B12 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC101CED237B581800D06B12 /* Networking.swift */; };
+		DC101CF4237B65A400D06B12 /* ExchangeRateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC101CF3237B65A400D06B12 /* ExchangeRateTableViewController.swift */; };
 		DC32AC12237AF1DD000ECD76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC32AC11237AF1DD000ECD76 /* AppDelegate.swift */; };
 		DC32AC14237AF1DD000ECD76 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC32AC13237AF1DD000ECD76 /* SceneDelegate.swift */; };
-		DC32AC16237AF1DD000ECD76 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC32AC15237AF1DD000ECD76 /* ViewController.swift */; };
 		DC32AC19237AF1DD000ECD76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC32AC17237AF1DD000ECD76 /* Main.storyboard */; };
 		DC32AC1B237AF1DE000ECD76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC32AC1A237AF1DE000ECD76 /* Assets.xcassets */; };
 		DC32AC1E237AF1DE000ECD76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC32AC1C237AF1DE000ECD76 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC101CED237B581800D06B12 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		DC101CF3237B65A400D06B12 /* ExchangeRateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewController.swift; sourceTree = "<group>"; };
 		DC32AC0E237AF1DD000ECD76 /* Currency_exchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currency_exchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC32AC11237AF1DD000ECD76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC32AC13237AF1DD000ECD76 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DC32AC15237AF1DD000ECD76 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DC32AC18237AF1DD000ECD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC32AC1A237AF1DE000ECD76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC32AC1D237AF1DE000ECD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,7 +60,8 @@
 			children = (
 				DC32AC11237AF1DD000ECD76 /* AppDelegate.swift */,
 				DC32AC13237AF1DD000ECD76 /* SceneDelegate.swift */,
-				DC32AC15237AF1DD000ECD76 /* ViewController.swift */,
+				DC101CF3237B65A400D06B12 /* ExchangeRateTableViewController.swift */,
+				DC101CED237B581800D06B12 /* Networking.swift */,
 				DC32AC17237AF1DD000ECD76 /* Main.storyboard */,
 				DC32AC1A237AF1DE000ECD76 /* Assets.xcassets */,
 				DC32AC1C237AF1DE000ECD76 /* LaunchScreen.storyboard */,
@@ -138,8 +141,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC32AC16237AF1DD000ECD76 /* ViewController.swift in Sources */,
+				DC101CEE237B581800D06B12 /* Networking.swift in Sources */,
 				DC32AC12237AF1DD000ECD76 /* AppDelegate.swift in Sources */,
+				DC101CF4237B65A400D06B12 /* ExchangeRateTableViewController.swift in Sources */,
 				DC32AC14237AF1DD000ECD76 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
