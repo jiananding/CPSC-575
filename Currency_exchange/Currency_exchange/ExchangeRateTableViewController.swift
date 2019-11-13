@@ -15,9 +15,11 @@ class ExchangeRateTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //let apiEndPoint = "http://data.fixer.io/api/latest?access_key=bce1f176074f68e8eb9b4422a825656d"
         //Using api from fixer.io (free account)
+        //let apiEndPoint = "http://data.fixer.io/api/latest?access_key=bce1f176074f68e8eb9b4422a825656d"
+        //Chech usage on exchangeratesapi.io
         let apiEndPoint = "https://api.exchangeratesapi.io/latest?base=CNY"
+        
         
         guard let url = URL(string: apiEndPoint) else {return}
         
