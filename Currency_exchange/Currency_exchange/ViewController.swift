@@ -10,7 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var init_value: UITextField!
+    @IBOutlet weak var converted_value: UILabel!
+    
     var base: String = "CAD"
+    var target: String = "USD"
     var date: String = ""
     var exchangeRates: [String: Double] =
         ["AUD": 0.0,
@@ -46,9 +50,7 @@ class ViewController: UIViewController {
          "USD": 0.0,
          "ZAR": 0.0
         ]
-    
-    @IBOutlet weak var converted_value: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -65,14 +67,14 @@ class ViewController: UIViewController {
             
             if let httpResponse = response as? HTTPURLResponse {
                 guard httpResponse.statusCode == 200 else {return}
-                print("Everything is ok")
+                print("HTTP status code: 200 OK")
             }
             
             guard let data = data else {return}
                 
             do {
                 guard let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else {return}
-                print(dict.description)
+                //print(dict.description)
                 guard let rates = dict["rates"] as? [String: Double], let base = dict["base"] as? String, let date = dict["date"] as? String else {return}
                 let currencies = rates.keys.sorted()
                 for currency in currencies {
@@ -80,16 +82,28 @@ class ViewController: UIViewController {
                     self.exchangeRates.updateValue(rate!, forKey: currency)
                 }
                 OperationQueue.main.addOperation({
-                    //self.navigationController?.navigationBar.topItem?.title = "updated on \(date)"
                     self.date = date
                     self.base = base
                 })
             }
             catch {
-                print("Some error")
+                // Some error
             }
         }
         task.resume()
+    }
+    
+    func calculate() {
+        let init_val = Double(init_value.text!)
+        let rate = exchangeRates[target]
+        converted_value.text = String(init_val! * rate!)
+        print("init_val: \(init_val!)")
+        print("rate: \(rate!)")
+        print("result: \(init_val! * rate!)")
+    }
+    
+    @IBAction func do_cal(_ sender: Any) {
+        calculate()
     }
 }
 
