@@ -7,29 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC101CEE237B581800D06B12 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC101CED237B581800D06B12 /* Networking.swift */; };
-		DC101CF4237B65A400D06B12 /* ExchangeRateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC101CF3237B65A400D06B12 /* ExchangeRateTableViewController.swift */; };
-		DC32AC12237AF1DD000ECD76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC32AC11237AF1DD000ECD76 /* AppDelegate.swift */; };
-		DC32AC14237AF1DD000ECD76 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC32AC13237AF1DD000ECD76 /* SceneDelegate.swift */; };
-		DC32AC19237AF1DD000ECD76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC32AC17237AF1DD000ECD76 /* Main.storyboard */; };
-		DC32AC1B237AF1DE000ECD76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC32AC1A237AF1DE000ECD76 /* Assets.xcassets */; };
-		DC32AC1E237AF1DE000ECD76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC32AC1C237AF1DE000ECD76 /* LaunchScreen.storyboard */; };
+		DC760B7523835CB0009EB3B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC760B7423835CB0009EB3B3 /* AppDelegate.swift */; };
+		DC760B7723835CB0009EB3B3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC760B7623835CB0009EB3B3 /* SceneDelegate.swift */; };
+		DC760B7923835CB0009EB3B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC760B7823835CB0009EB3B3 /* ViewController.swift */; };
+		DC760B7C23835CB0009EB3B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC760B7A23835CB0009EB3B3 /* Main.storyboard */; };
+		DC760B7E23835CB1009EB3B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC760B7D23835CB1009EB3B3 /* Assets.xcassets */; };
+		DC760B8123835CB1009EB3B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC760B7F23835CB1009EB3B3 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DC101CED237B581800D06B12 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		DC101CF3237B65A400D06B12 /* ExchangeRateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewController.swift; sourceTree = "<group>"; };
-		DC32AC0E237AF1DD000ECD76 /* Currency_exchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currency_exchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC32AC11237AF1DD000ECD76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DC32AC13237AF1DD000ECD76 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DC32AC18237AF1DD000ECD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		DC32AC1A237AF1DE000ECD76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DC32AC1D237AF1DE000ECD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		DC32AC1F237AF1DE000ECD76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC760B7123835CB0009EB3B3 /* Currency_exchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currency_exchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC760B7423835CB0009EB3B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DC760B7623835CB0009EB3B3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DC760B7823835CB0009EB3B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DC760B7B23835CB0009EB3B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DC760B7D23835CB1009EB3B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC760B8023835CB1009EB3B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DC760B8223835CB1009EB3B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		DC32AC0B237AF1DD000ECD76 /* Frameworks */ = {
+		DC760B6E23835CB0009EB3B3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -39,33 +37,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DC32AC05237AF1DD000ECD76 = {
+		DC760B6823835CB0009EB3B3 = {
 			isa = PBXGroup;
 			children = (
-				DC32AC10237AF1DD000ECD76 /* Currency_exchange */,
-				DC32AC0F237AF1DD000ECD76 /* Products */,
+				DC760B7323835CB0009EB3B3 /* Currency_exchange */,
+				DC760B7223835CB0009EB3B3 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		DC32AC0F237AF1DD000ECD76 /* Products */ = {
+		DC760B7223835CB0009EB3B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DC32AC0E237AF1DD000ECD76 /* Currency_exchange.app */,
+				DC760B7123835CB0009EB3B3 /* Currency_exchange.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DC32AC10237AF1DD000ECD76 /* Currency_exchange */ = {
+		DC760B7323835CB0009EB3B3 /* Currency_exchange */ = {
 			isa = PBXGroup;
 			children = (
-				DC32AC11237AF1DD000ECD76 /* AppDelegate.swift */,
-				DC32AC13237AF1DD000ECD76 /* SceneDelegate.swift */,
-				DC101CF3237B65A400D06B12 /* ExchangeRateTableViewController.swift */,
-				DC101CED237B581800D06B12 /* Networking.swift */,
-				DC32AC17237AF1DD000ECD76 /* Main.storyboard */,
-				DC32AC1A237AF1DE000ECD76 /* Assets.xcassets */,
-				DC32AC1C237AF1DE000ECD76 /* LaunchScreen.storyboard */,
-				DC32AC1F237AF1DE000ECD76 /* Info.plist */,
+				DC760B7423835CB0009EB3B3 /* AppDelegate.swift */,
+				DC760B7623835CB0009EB3B3 /* SceneDelegate.swift */,
+				DC760B7823835CB0009EB3B3 /* ViewController.swift */,
+				DC760B7A23835CB0009EB3B3 /* Main.storyboard */,
+				DC760B7D23835CB1009EB3B3 /* Assets.xcassets */,
+				DC760B7F23835CB1009EB3B3 /* LaunchScreen.storyboard */,
+				DC760B8223835CB1009EB3B3 /* Info.plist */,
 			);
 			path = Currency_exchange;
 			sourceTree = "<group>";
@@ -73,13 +70,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DC32AC0D237AF1DD000ECD76 /* Currency_exchange */ = {
+		DC760B7023835CB0009EB3B3 /* Currency_exchange */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC32AC22237AF1DE000ECD76 /* Build configuration list for PBXNativeTarget "Currency_exchange" */;
+			buildConfigurationList = DC760B8523835CB1009EB3B3 /* Build configuration list for PBXNativeTarget "Currency_exchange" */;
 			buildPhases = (
-				DC32AC0A237AF1DD000ECD76 /* Sources */,
-				DC32AC0B237AF1DD000ECD76 /* Frameworks */,
-				DC32AC0C237AF1DD000ECD76 /* Resources */,
+				DC760B6D23835CB0009EB3B3 /* Sources */,
+				DC760B6E23835CB0009EB3B3 /* Frameworks */,
+				DC760B6F23835CB0009EB3B3 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -87,25 +84,25 @@
 			);
 			name = Currency_exchange;
 			productName = Currency_exchange;
-			productReference = DC32AC0E237AF1DD000ECD76 /* Currency_exchange.app */;
+			productReference = DC760B7123835CB0009EB3B3 /* Currency_exchange.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		DC32AC06237AF1DD000ECD76 /* Project object */ = {
+		DC760B6923835CB0009EB3B3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = Stephen;
 				TargetAttributes = {
-					DC32AC0D237AF1DD000ECD76 = {
-						CreatedOnToolsVersion = 11.2;
+					DC760B7023835CB0009EB3B3 = {
+						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
 			};
-			buildConfigurationList = DC32AC09237AF1DD000ECD76 /* Build configuration list for PBXProject "Currency_exchange" */;
+			buildConfigurationList = DC760B6C23835CB0009EB3B3 /* Build configuration list for PBXProject "Currency_exchange" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -113,56 +110,55 @@
 				en,
 				Base,
 			);
-			mainGroup = DC32AC05237AF1DD000ECD76;
-			productRefGroup = DC32AC0F237AF1DD000ECD76 /* Products */;
+			mainGroup = DC760B6823835CB0009EB3B3;
+			productRefGroup = DC760B7223835CB0009EB3B3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DC32AC0D237AF1DD000ECD76 /* Currency_exchange */,
+				DC760B7023835CB0009EB3B3 /* Currency_exchange */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		DC32AC0C237AF1DD000ECD76 /* Resources */ = {
+		DC760B6F23835CB0009EB3B3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC32AC1E237AF1DE000ECD76 /* LaunchScreen.storyboard in Resources */,
-				DC32AC1B237AF1DE000ECD76 /* Assets.xcassets in Resources */,
-				DC32AC19237AF1DD000ECD76 /* Main.storyboard in Resources */,
+				DC760B8123835CB1009EB3B3 /* LaunchScreen.storyboard in Resources */,
+				DC760B7E23835CB1009EB3B3 /* Assets.xcassets in Resources */,
+				DC760B7C23835CB0009EB3B3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		DC32AC0A237AF1DD000ECD76 /* Sources */ = {
+		DC760B6D23835CB0009EB3B3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC101CEE237B581800D06B12 /* Networking.swift in Sources */,
-				DC32AC12237AF1DD000ECD76 /* AppDelegate.swift in Sources */,
-				DC101CF4237B65A400D06B12 /* ExchangeRateTableViewController.swift in Sources */,
-				DC32AC14237AF1DD000ECD76 /* SceneDelegate.swift in Sources */,
+				DC760B7923835CB0009EB3B3 /* ViewController.swift in Sources */,
+				DC760B7523835CB0009EB3B3 /* AppDelegate.swift in Sources */,
+				DC760B7723835CB0009EB3B3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		DC32AC17237AF1DD000ECD76 /* Main.storyboard */ = {
+		DC760B7A23835CB0009EB3B3 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DC32AC18237AF1DD000ECD76 /* Base */,
+				DC760B7B23835CB0009EB3B3 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		DC32AC1C237AF1DE000ECD76 /* LaunchScreen.storyboard */ = {
+		DC760B7F23835CB1009EB3B3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DC32AC1D237AF1DE000ECD76 /* Base */,
+				DC760B8023835CB1009EB3B3 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -170,7 +166,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		DC32AC20237AF1DE000ECD76 /* Debug */ = {
+		DC760B8323835CB1009EB3B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -230,7 +226,7 @@
 			};
 			name = Debug;
 		};
-		DC32AC21237AF1DE000ECD76 /* Release */ = {
+		DC760B8423835CB1009EB3B3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -284,7 +280,7 @@
 			};
 			name = Release;
 		};
-		DC32AC23237AF1DE000ECD76 /* Debug */ = {
+		DC760B8623835CB1009EB3B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -302,7 +298,7 @@
 			};
 			name = Debug;
 		};
-		DC32AC24237AF1DE000ECD76 /* Release */ = {
+		DC760B8723835CB1009EB3B3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -323,25 +319,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DC32AC09237AF1DD000ECD76 /* Build configuration list for PBXProject "Currency_exchange" */ = {
+		DC760B6C23835CB0009EB3B3 /* Build configuration list for PBXProject "Currency_exchange" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DC32AC20237AF1DE000ECD76 /* Debug */,
-				DC32AC21237AF1DE000ECD76 /* Release */,
+				DC760B8323835CB1009EB3B3 /* Debug */,
+				DC760B8423835CB1009EB3B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DC32AC22237AF1DE000ECD76 /* Build configuration list for PBXNativeTarget "Currency_exchange" */ = {
+		DC760B8523835CB1009EB3B3 /* Build configuration list for PBXNativeTarget "Currency_exchange" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DC32AC23237AF1DE000ECD76 /* Debug */,
-				DC32AC24237AF1DE000ECD76 /* Release */,
+				DC760B8623835CB1009EB3B3 /* Debug */,
+				DC760B8723835CB1009EB3B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = DC32AC06237AF1DD000ECD76 /* Project object */;
+	rootObject = DC760B6923835CB0009EB3B3 /* Project object */;
 }
