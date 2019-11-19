@@ -54,12 +54,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        init_value.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         getLatest()
     }
 
     func getLatest() {
-        let apiEndPoint = "https://api.exchangeratesapi.io/latest?base=CNY"
-        
+        let apiEndPoint = "https://api.exchangeratesapi.io/latest?base=CAD"
         guard let url = URL(string: apiEndPoint) else {return}
         
         let task = URLSession.shared.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
                 
             do {
                 guard let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else {return}
-                //print(dict.description)
+                print(dict.description)
                 guard let rates = dict["rates"] as? [String: Double], let base = dict["base"] as? String, let date = dict["date"] as? String else {return}
                 let currencies = rates.keys.sorted()
                 for currency in currencies {
@@ -84,6 +84,7 @@ class ViewController: UIViewController {
                 OperationQueue.main.addOperation({
                     self.date = date
                     self.base = base
+                    self.calculate(init_val: 1.0)
                 })
             }
             catch {
@@ -93,17 +94,18 @@ class ViewController: UIViewController {
         task.resume()
     }
     
-    func calculate() {
-        let init_val = Double(init_value.text!)
+    func calculate(init_val: Double) {
         let rate = exchangeRates[target]
-        converted_value.text = String(init_val! * rate!)
-        print("init_val: \(init_val!)")
-        print("rate: \(rate!)")
-        print("result: \(init_val! * rate!)")
+        converted_value.text = String(init_val * rate!)
     }
     
-    @IBAction func do_cal(_ sender: Any) {
-        calculate()
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if let val = Double(textField.text!) {
+            calculate(init_val: val)
+        }
+        else {
+            calculate(init_val: 1.0)
+        }
     }
 }
 
