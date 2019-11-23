@@ -15,6 +15,7 @@ class ViewController: UIViewController{
     @IBOutlet weak var text_image: UIImageView!
     @IBOutlet weak var text_result: UILabel!
     @IBOutlet weak var croped_section: UIImageView!
+    @IBOutlet weak var i_button: UIButton!
     
     var picked_image: UIImage = UIImage(named: "hello")!
     var box_position: [CGRect] = []
@@ -53,6 +54,16 @@ class ViewController: UIViewController{
         //text_image.addGestureRecognizer(leftSwipe)
         text_image.addGestureRecognizer(pinchMethod)
         text_image.addGestureRecognizer(panMethod)
+        
+        //let i_button = UIButton(type: .system)
+        //i_button.tag = 999
+        //i_button.frame = CGRect(x: 500, y: 500, width: 100, height: 100)
+        i_button.addTarget(self, action: #selector(b_Action), for: .touchDown)
+        i_button.backgroundColor = UIColor.clear
+        i_button.titleLabel?.text = ""
+        i_button.layer.borderWidth = 3
+        i_button.layer.borderColor = UIColor.cyan.cgColor
+        self.view.addSubview(i_button)
     }
 
     @IBAction func select_photo(_ sender: Any) {
@@ -115,15 +126,15 @@ class ViewController: UIViewController{
     
     // screen touch position (first touch position)
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            print("touch began1: \(touch.location(in: text_image))")
-            swipe_start = touch.location(in: text_image)
-            swipe_start = (self.text_image?.convert(swipe_start, to: self.view))!
-            print("touch began2: \(touch.location(in: self.view))")
-
-            // do crop image here
-            //crop_image(location: touch_location)
-        }
+//        if let touch = touches.first {
+//            print("touch began1: \(touch.location(in: text_image))")
+//            swipe_start = touch.location(in: text_image)
+//            swipe_start = (self.text_image?.convert(swipe_start, to: self.view))!
+//            print("touch began2: \(touch.location(in: self.view))")
+//
+//            // do crop image here
+//            //crop_image(location: touch_location)
+//        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -136,13 +147,13 @@ class ViewController: UIViewController{
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            print("touch end: \(touch.location(in: self.view))")
-            swipe_end = touch.location(in: self.view)
-            swipe_end.y -= 20
-            // do crop image here
-            crop_image()
-        }
+//        if let touch = touches.first {
+//            print("touch end: \(touch.location(in: self.view))")
+//            swipe_end = touch.location(in: self.view)
+//            swipe_end.y -= 20
+//            // do crop image here
+//            crop_image()
+//        }
     }
     
     // siwpe gesture handling
@@ -187,7 +198,7 @@ class ViewController: UIViewController{
             var temp = CGRect(x: swipe_start.x, y: swipe_start.y - 50, width: abs(swipe_end.x - swipe_start.x), height: 100)
             let croppedCGImage = cg_image.cropping(to: CGRect(x: swipe_start.x, y: swipe_start.y - 25, width: abs(swipe_end.x - swipe_start.x), height: 50))!
             croped_section.image = UIImage(cgImage: croppedCGImage)
-            //read(image: UIImage(cgImage: croppedCGImage))
+            read(image: UIImage(cgImage: croppedCGImage))
         }
     }
     
@@ -201,6 +212,10 @@ class ViewController: UIViewController{
         image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
+    }
+    
+    @objc func b_Action(sender: UIButton!) {
+        print("Button tapped")
     }
     
 }
