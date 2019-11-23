@@ -6,10 +6,13 @@
 //  Copyright © 2019 Stephen. All rights reserved.
 //
 
+// Reference: youtube.com/watch?v=2kwCfFG5fDA
+
 import Foundation
 import UIKit
 
-class PickerLauncher: NSObject {
+class PickerLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataSource{
+    
     var main_view = UIView()
     let blackView = UIView()
     
@@ -20,7 +23,13 @@ class PickerLauncher: NSObject {
         return cv
     }()
     
-
+    let cellId = "cellId"
+    
+    var selection: [String] =
+        ["AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "GBP", "HKD", "HRK", "HUF", "IDR", "ILS",
+         "INR", "ISK", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PLN", "RON", "RUB", "SEK", "SGD",
+         "THB", "TRY", "USD", "ZAR"]
+    
     func showPicker(own_view: UIView) {
         self.main_view = own_view
         blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
@@ -53,7 +62,21 @@ class PickerLauncher: NSObject {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selection.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        return cell
+    }
+    
     override init() {
         super.init()
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
     }
 }
