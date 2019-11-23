@@ -9,8 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    // restrict textfile to input number or check textfile.text
-    // currency selection maybe can use picker view to do selection
     @IBOutlet weak var base_label: UILabel!
     @IBOutlet weak var target_label: UILabel!
     

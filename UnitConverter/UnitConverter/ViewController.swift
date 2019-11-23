@@ -24,7 +24,8 @@ class ViewController: UIViewController {
         // Base idea once user set the input data unit then
         // case 1: get all the related unit, when user select and unit, then pull up the data
         // case 2: when user decice which unit to convert to, then do the operation
-        
+        // May do a picker for category of unit, then two other picker (base and target)for speicfi unit in that category
+
     }
 }
 
@@ -40,5 +41,3 @@ extension Double {
         return Measurement(value: self, unit: UnitDuration.seconds)
     }
 }
-
-//
