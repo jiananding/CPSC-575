@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var base_picker: UIScrollView!
     @IBOutlet weak var target_picker: UIScrollView!
     
+    @IBOutlet weak var base_picker_textfield: UITextField!
+    
     var date: String = ""
 
     var exchangeRates: [String: Double] =
@@ -35,10 +37,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // converted value change while textfield text editing changed
+        handleMore()
+
         init_value.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         creacte_picker1()
         creacte_picker2()
         getLatest()
+
+        
     }
 
     func getLatest() {
@@ -141,5 +147,11 @@ class ViewController: UIViewController {
         target_label.text = sender.titleLabel?.text
         self.calculate(init_val: 1.0)
     }
+
+    let pickerLauncher = PickerLauncher()
+    func handleMore() {
+        pickerLauncher.showPicker(own_view: view)
+    }
+
 }
 
