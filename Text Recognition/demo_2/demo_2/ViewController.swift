@@ -12,12 +12,11 @@ import Photos
 
 class ViewController: UIViewController{
 
-    @IBOutlet weak var text_image: UIImageView!
+    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var text_result: UILabel!
     @IBOutlet weak var croped_section: UIImageView!
-    @IBOutlet weak var i_button: UIButton!
     
-    var picked_image: UIImage = UIImage(named: "hello")!
+    var imgData: UIImage = UIImage(named: "hello")!
     var box_position: [CGRect] = []
     
     let image_picker = UIImagePickerController()
@@ -30,40 +29,8 @@ class ViewController: UIViewController{
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        text_image.image = picked_image
+        imgView.image = imgData
         image_picker.delegate = self
-
-        // gesture sample: swipe, pan, pinch, rotate
-        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwip(sender:)))
-        rightSwipe.direction = .right
-        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwip(sender:)))
-        leftSwipe.direction = .left
-        
-        let pinchMethod = UIPinchGestureRecognizer(target: self, action: #selector(pinchImage(sender:)))
-        
-        let panMethod = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender:)))
-        panMethod.minimumNumberOfTouches = 2
-//        rightSwipe.require(toFail: panMethod)
-//        leftSwipe.require(toFail: panMethod)
-//        panMethod.require(toFail: rightSwipe)
-//        panMethod.require(toFail: leftSwipe)
-        
-        text_image.isUserInteractionEnabled = true
-        //text_image.addGestureRecognizer(rightSwipe)
-        //text_image.addGestureRecognizer(leftSwipe)
-        text_image.addGestureRecognizer(pinchMethod)
-        text_image.addGestureRecognizer(panMethod)
-        
-        //let i_button = UIButton(type: .system)
-        //i_button.tag = 999
-        //i_button.frame = CGRect(x: 500, y: 500, width: 100, height: 100)
-        i_button.addTarget(self, action: #selector(b_Action), for: .touchDown)
-        i_button.backgroundColor = UIColor.clear
-        i_button.titleLabel?.text = ""
-        i_button.layer.borderWidth = 3
-        i_button.layer.borderColor = UIColor.cyan.cgColor
-        self.view.addSubview(i_button)
     }
 
     @IBAction func select_photo(_ sender: Any) {
@@ -100,9 +67,76 @@ class ViewController: UIViewController{
         request.revision = VNRecognizeTextRequestRevision1
         
         try? requestHandler.perform([request])
-        //text_image.image = drawRectangleOnImage(image: self.text_image.image!)
     }
     
+    // screen touch position (first touch position)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            print("touch began1: \(touch.location(in: imgView))")
+            swipe_start = touch.location(in: imgView)
+            swipe_start = (self.imgView?.convert(swipe_start, to: self.view))!
+            swipe_start = getTappedPointOnImg(tappedPoint: swipe_start)
+            print("touch began2: \(touch.location(in: self.view))")
+
+        }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            print("touch end: \(touch.location(in: self.view))")
+            swipe_end = touch.location(in: self.view)
+            swipe_end.y -= 20
+            swipe_end = getTappedPointOnImg(tappedPoint: swipe_end)
+            // do crop image here
+            crop_image()
+        }
+    }
+    
+    func getTappedPointOnImg(tappedPoint: CGPoint) -> CGPoint{  //Get the coordinates of tapped point on image
+        var x,y :CGFloat
+        if (imgView.frame.size.height/imgView.frame.size.width > imgData.size.height/imgData.size.width){
+            let imgX = imgView.frame.origin.x
+            let imgY = imgView.frame.origin.y + (imgView.frame.height - (imgView.frame.width / imgData.size.width)*imgData.size.height) / 2
+            let imgWidth = imgView.frame.width
+            let imgHeight = imgView.frame.height - (imgView.frame.width / imgData.size.width)*imgData.size.height
+            x = imgData.size.width*(tappedPoint.x - imgX)/imgWidth
+            y = imgData.size.height*(tappedPoint.y - imgY)/imgHeight
+        }
+        else{
+            let imgX = imgView.frame.origin.x + (imgView.frame.width - (imgView.frame.height / imgData.size.height)*imgData.size.width) / 2
+            let imgY = imgView.frame.origin.y
+            let imgWidth = imgView.frame.width - (imgView.frame.height / imgData.size.height)*imgData.size.width
+            let imgHeight = imgView.frame.height
+            x = imgData.size.width*(tappedPoint.x - imgX)/imgWidth
+            y = imgData.size.height*(tappedPoint.y - imgY)/imgHeight
+        }
+        let tapped = CGPoint(x: x, y: y)
+        return tapped
+    }
+    
+    
+    func crop_image() {
+        let screen_shot: UIImage = imgData
+        let cg_image = screen_shot.cgImage!
+    
+        if swipe_start != swipe_end {
+            let croppedCGImage = cg_image.cropping(to: CGRect(x: swipe_start.x, y: swipe_start.y - 25, width: abs(swipe_end.x - swipe_start.x), height: 50))!
+            croped_section.image = UIImage(cgImage: croppedCGImage)
+            read(image: UIImage(cgImage: croppedCGImage))
+        }
+    }
+    
+    func take_shot() -> UIImage {
+        var image: UIImage?
+        let currentLayer = UIApplication.shared.keyWindow!.layer
+        let currentScale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(currentLayer.frame.size, false, currentScale)
+        guard let currentContext = UIGraphicsGetCurrentContext() else {return image!}
+        currentLayer.render(in: currentContext)
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
     
     func drawRectangleOnImage(image: UIImage) -> UIImage {
         let imageSize = image.size
@@ -123,101 +157,6 @@ class ViewController: UIViewController{
         UIGraphicsEndImageContext()
         return newImage!
     }
-    
-    // screen touch position (first touch position)
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let touch = touches.first {
-//            print("touch began1: \(touch.location(in: text_image))")
-//            swipe_start = touch.location(in: text_image)
-//            swipe_start = (self.text_image?.convert(swipe_start, to: self.view))!
-//            print("touch began2: \(touch.location(in: self.view))")
-//
-//            // do crop image here
-//            //crop_image(location: touch_location)
-//        }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            //print("touch moved: \(touch.location(in: self.view))")
-            //swipe_end = touch.location(in: self.view)
-            // do crop image here
-            //crop_image(location: touch_location)
-        }
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let touch = touches.first {
-//            print("touch end: \(touch.location(in: self.view))")
-//            swipe_end = touch.location(in: self.view)
-//            swipe_end.y -= 20
-//            // do crop image here
-//            crop_image()
-//        }
-    }
-    
-    // siwpe gesture handling
-    @objc func handleSwip(sender: UISwipeGestureRecognizer) {
-        if sender.state == .ended {
-            switch sender.direction {
-            case .right:
-                view.backgroundColor = .red
-            case .left:
-                view.backgroundColor = .yellow
-            default:
-                break
-            }
-        }
-    }
-    
-    // zoom in or out for text image
-    @objc func pinchImage(sender: UIPinchGestureRecognizer) {
-        if let scale = (sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale)) {
-            guard scale.a > 1.0 else {return}
-            guard scale.d > 1.0 else {return}
-            sender.view?.transform = scale
-            sender.scale = 1.0
-        }
-    }
-    
-    // handle pan gesture
-    @objc func handlePan(sender: UIPanGestureRecognizer) {
-        let gview = sender.view
-        if sender.state == .began || sender.state == .changed {
-            let translation = sender.translation(in: gview?.superview)
-            gview?.center = CGPoint(x: (gview?.center.x)! + translation.x, y: (gview?.center.y)! + translation.y)
-            sender.setTranslation(CGPoint.zero, in: gview?.superview)
-        }
-    }
-    
-    func crop_image() {
-        let screen_shot: UIImage = take_shot()
-        let cg_image = screen_shot.cgImage!
-    
-        if swipe_start != swipe_end {
-            var temp = CGRect(x: swipe_start.x, y: swipe_start.y - 50, width: abs(swipe_end.x - swipe_start.x), height: 100)
-            let croppedCGImage = cg_image.cropping(to: CGRect(x: swipe_start.x, y: swipe_start.y - 25, width: abs(swipe_end.x - swipe_start.x), height: 50))!
-            croped_section.image = UIImage(cgImage: croppedCGImage)
-            read(image: UIImage(cgImage: croppedCGImage))
-        }
-    }
-    
-    func take_shot() -> UIImage {
-        var image: UIImage?
-        let currentLayer = UIApplication.shared.keyWindow!.layer
-        let currentScale = UIScreen.main.scale
-        UIGraphicsBeginImageContextWithOptions(currentLayer.frame.size, false, currentScale)
-        guard let currentContext = UIGraphicsGetCurrentContext() else {return image!}
-        currentLayer.render(in: currentContext)
-        image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image!
-    }
-    
-    @objc func b_Action(sender: UIButton!) {
-        print("Button tapped")
-    }
-    
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -227,8 +166,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         dismiss(animated: true, completion: nil)
-        picked_image = (info[.originalImage] as? UIImage)!
-        text_image.image = picked_image
+        imgData = (info[.originalImage] as? UIImage)!
+        imgView.image = imgData
         // read()
     }
 }

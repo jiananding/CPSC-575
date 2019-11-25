@@ -46,18 +46,13 @@
                                 <rect key="frame" x="90" y="630" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCd-Sz-adS">
-                                <rect key="frame" x="20" y="565" width="260" height="105"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="croped_section" destination="AKt-6J-XYh" id="ZfA-EJ-BCT"/>
-                        <outlet property="i_button" destination="bCd-Sz-adS" id="cS9-vu-EVy"/>
-                        <outlet property="text_image" destination="sav-WE-TB6" id="8e3-6e-UQJ"/>
+                        <outlet property="imgView" destination="sav-WE-TB6" id="dhq-du-2N1"/>
                         <outlet property="text_result" destination="FdJ-Ak-Hcd" id="z4e-5b-HIO"/>
                     </connections>
                 </viewController>
