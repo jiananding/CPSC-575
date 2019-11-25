@@ -186,6 +186,7 @@ class MainViewController: UIViewController {
         if sender.state == .ended {
             print("Tap Detected")
             print("You are tapping \(sender.location(in: self.view))")
+            print("You are tapping \(getTappedPointOnImg(tappedPoint: sender.location(in: self.view)))")
         }
     }
     
@@ -197,6 +198,27 @@ class MainViewController: UIViewController {
         }
     }
     
+    func getTappedPointOnImg(tappedPoint: CGPoint) -> CGPoint{  //Get the coordinates of tapped point on image
+        var x,y :CGFloat
+        if (imgView.frame.size.height/imgView.frame.size.width > imgData.size.height/imgData.size.width){
+            let imgX = imgView.frame.origin.x
+            let imgY = imgView.frame.origin.y + (imgView.frame.height - (imgView.frame.width / imgData.size.width)*imgData.size.height) / 2
+            let imgWidth = imgView.frame.width
+            let imgHeight = imgView.frame.height - (imgView.frame.width / imgData.size.width)*imgData.size.height
+            x = imgData.size.width*(tappedPoint.x - imgX)/imgWidth
+            y = imgData.size.height*(tappedPoint.y - imgY)/imgHeight
+        }
+        else{
+            let imgX = imgView.frame.origin.x + (imgView.frame.width - (imgView.frame.height / imgData.size.height)*imgData.size.width) / 2
+            let imgY = imgView.frame.origin.y
+            let imgWidth = imgView.frame.width - (imgView.frame.height / imgData.size.height)*imgData.size.width
+            let imgHeight = imgView.frame.height
+            x = imgData.size.width*(tappedPoint.x - imgX)/imgWidth
+            y = imgData.size.height*(tappedPoint.y - imgY)/imgHeight
+        }
+        let tapped = CGPoint(x: x, y: y)
+        return tapped
+    }
     //---Gesture Recognition Methods End---
 
     //---Draw Box For Text Recognion---
