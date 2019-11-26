@@ -94,14 +94,16 @@ class BackEnd {
         let arr = expression.split(separator: " ")
         let le = arr.count
         
-        if (numLeft != numRight || (numRight == 0 && numLeft == 0)) {
+        if (numLeft != numRight) {
             return false
         } else {
-            let indexLeftB = arr.lastIndex(of: "(")!
-            let indexRightB = arr.lastIndex(of: ")")!
-            
-            if (indexLeftB > indexRightB) {
-                return false
+            if (numRight != 0 && numLeft != 0){
+                let indexLeftB = arr.lastIndex(of: "(")!
+                let indexRightB = arr.lastIndex(of: ")")!
+                
+                if (indexLeftB > indexRightB) {
+                    return false
+                }
             }
         }
         
