@@ -116,8 +116,10 @@ class MainViewController: UIViewController {
 
         let emptySpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
-
-        let items = [emptySpace, done]
+        let leftBracket: UIBarButtonItem = UIBarButtonItem(title: "(", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.bracket))
+        let rightBracket: UIBarButtonItem = UIBarButtonItem(title: ")", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.bracket))
+        
+        let items = [emptySpace, leftBracket, emptySpace, rightBracket, emptySpace, done]
         doneToolbar.items = items
         doneToolbar.sizeToFit()
 
@@ -137,6 +139,12 @@ class MainViewController: UIViewController {
     @objc func doneButtonAction() {
         expressionBar.resignFirstResponder()
         expressionBar.text!.append(" ")
+        backend.calculation(expressionBar.text!)
+        updateResult()
+    }
+    
+    @objc func bracket(sender: UIBarButtonItem){
+        expressionBar.text?.append(sender.title! + " ")
         backend.calculation(expressionBar.text!)
         updateResult()
     }
@@ -187,6 +195,10 @@ class MainViewController: UIViewController {
 //            print("Tap Detected")
 //            print("You are tapping \(sender.location(in: self.view))")
 //            print("You are tapping \(getTappedPointOnImg(tappedPoint: sender.location(in: self.view)))")
+            var point: CGPoint = sender.location(in: self.view)
+            point = getTappedPointOnImg(tappedPoint: point)
+            backend.deal_with_box()
+            expressionBar.text = backend.chcek_box(pts: point, equation: expressionBar.text!)
         }
     }
     
@@ -314,17 +326,15 @@ class MainViewController: UIViewController {
 
     // touch position reflected to image
     // screen touch position (first touch position)
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("in touchesBegan")
-        if let touch = touches.first {
-            var point: CGPoint = touch.location(in: imgView)
-            point = (self.imgView?.convert(point, to: self.view))!
-            point = getTappedPointOnImg(tappedPoint: point)
-            backend.deal_with_box()
-            expressionBar.text = backend.chcek_box(pts: point, equation: expressionBar.text!)
-            print(point)
-        }
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        if let touch = touches.first {
+//            var point: CGPoint = touch.location(in: imgView)
+//            point = (self.imgView?.convert(point, to: self.view))!
+//            point = getTappedPointOnImg(tappedPoint: point)
+//            backend.deal_with_box()
+//            expressionBar.text = backend.chcek_box(pts: point, equation: expressionBar.text!)
+//        }
+//    }
 
 //    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        if let touch = touches.first {

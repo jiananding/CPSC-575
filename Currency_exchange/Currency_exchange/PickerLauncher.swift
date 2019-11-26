@@ -62,15 +62,9 @@ class PickerLauncher: NSObject{
     }
     
     func setUpMenu() {
-        // setup data
-        var data = [CellData]()
-        for currency in currency_code_string {
-            let temp = CellData(currency_code: currency)
-            data.append(temp)
-        }
-        
         
     }
+    
   
     override init() {
         super.init()
