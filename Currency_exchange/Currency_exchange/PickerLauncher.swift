@@ -11,25 +11,24 @@
 import Foundation
 import UIKit
 
-class PickerLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataSource{
+struct CellData {
+    //let image: UIImage?
+    //let country_name: String?
+    let currency_code: String?
+}
+
+class PickerLauncher: NSObject{
     
     var main_view = UIView()
     let blackView = UIView()
     
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor.white
-        return cv
-    }()
+    let menu = UITableView()
     
-    let cellId = "cellId"
-    
-    var selection: [String] =
+    var currency_code_string: [String] =
         ["AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "GBP", "HKD", "HRK", "HUF", "IDR", "ILS",
          "INR", "ISK", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PLN", "RON", "RUB", "SEK", "SGD",
          "THB", "TRY", "USD", "ZAR"]
-    
+        
     func showPicker(own_view: UIView) {
         self.main_view = own_view
         blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
@@ -37,11 +36,11 @@ class PickerLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataSo
         blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
         
         main_view.addSubview(blackView)
-        main_view.addSubview(collectionView)
+        main_view.addSubview(menu)
         
         let height: CGFloat = 500
         let y: CGFloat = main_view.frame.height - height
-        collectionView.frame = CGRect(x: 0, y: main_view.frame.height, width: main_view.frame.width, height: 500)
+        menu.frame = CGRect(x: 0, y: main_view.frame.height, width: main_view.frame.width, height: 500)
         
         
         blackView.frame = main_view.frame
@@ -49,7 +48,7 @@ class PickerLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataSo
         
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
             self.blackView.alpha = 1
-            self.collectionView.frame = CGRect(x: 0, y: y, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
+            self.menu.frame = CGRect(x: 0, y: y, width: self.menu.frame.width, height: self.menu.frame.height)
         }, completion: nil)
     }
     
@@ -58,25 +57,22 @@ class PickerLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataSo
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 0
             
-            self.collectionView.frame = CGRect(x: 0.0, y: self.main_view.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
+            self.menu.frame = CGRect(x: 0.0, y: self.main_view.frame.height, width: self.menu.frame.width, height: self.menu.frame.height)
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selection.count
+    func setUpMenu() {
+        // setup data
+        var data = [CellData]()
+        for currency in currency_code_string {
+            let temp = CellData(currency_code: currency)
+            data.append(temp)
+        }
+        
+        
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        return cell
-    }
-    
+  
     override init() {
         super.init()
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
     }
 }

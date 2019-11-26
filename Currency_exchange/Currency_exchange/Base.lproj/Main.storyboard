@@ -29,16 +29,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nfo-Op-eaq">
-                                <rect key="frame" x="20" y="392" width="374" height="53"/>
+                                <rect key="frame" x="20" y="306" width="374" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="srK-rY-O2h"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="HC8-bj-zdd"/>
-                            </scrollView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aUq-nI-Vs8">
-                                <rect key="frame" x="20" y="476" width="374" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="bgT-YF-gPX"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="r20-xl-oJP"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwM-AI-NU3">
                                 <rect key="frame" x="66" y="257" width="71" height="35"/>
@@ -62,6 +56,12 @@
                                     <action selector="base_button_label:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GhQ-mc-SQA"/>
                                 </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aUq-nI-Vs8">
+                                <rect key="frame" x="20" y="367" width="374" height="53"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="bgT-YF-gPX"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="r20-xl-oJP"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

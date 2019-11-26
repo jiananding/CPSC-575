@@ -142,7 +142,7 @@ class MainViewController: UIViewController {
     }
     
     func prepareGestureRecog() {
-        print("prepareGestureRecog Called")
+//        print("prepareGestureRecog Called")
         imgView.isUserInteractionEnabled = true
         let pinchMethod = UIPinchGestureRecognizer(target: self, action: #selector(pinchImage(sender:)))    //Zoom in/out
         let panMethod = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender:)))         //Move img with two fingers
@@ -160,8 +160,8 @@ class MainViewController: UIViewController {
     //---Gesture Recognition Methods Start---
     @objc func pinchImage(sender: UIPinchGestureRecognizer) {                                                //Zoom in / out
         if let scale = (sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale)) {
-            print("Pinch Detected")
-            print("The size of imgView is \(imgView.frame.size)")
+//            print("Pinch Detected")
+//            print("The size of imgView is \(imgView.frame.size)")
             guard scale.a > 1.0 else {return}
             guard scale.d > 1.0 else {return}
             sender.view?.transform = scale
@@ -170,9 +170,9 @@ class MainViewController: UIViewController {
     }
     
     @objc func handlePan(sender: UIPanGestureRecognizer) {                                                     //Move image with two fingers
-        print("2-finger Pan Detedted")
-        print("The center of imgView is \(imgView.center)")
-        print("The coordinator of imgView is \(imgView.frame.origin)")
+//        print("2-finger Pan Detedted")
+//        print("The center of imgView is \(imgView.center)")
+//        print("The coordinator of imgView is \(imgView.frame.origin)")
         let gview = sender.view
         if sender.state == .began || sender.state == .changed {
             let translation = sender.translation(in: gview?.superview)
@@ -184,9 +184,9 @@ class MainViewController: UIViewController {
     @objc func handleTap(sender: UIPanGestureRecognizer) {                                                     //Tap to select boxes
         guard sender.view != nil else { return }
         if sender.state == .ended {
-            print("Tap Detected")
-            print("You are tapping \(sender.location(in: self.view))")
-            print("You are tapping \(getTappedPointOnImg(tappedPoint: sender.location(in: self.view)))")
+//            print("Tap Detected")
+//            print("You are tapping \(sender.location(in: self.view))")
+//            print("You are tapping \(getTappedPointOnImg(tappedPoint: sender.location(in: self.view)))")
         }
     }
     
@@ -202,16 +202,16 @@ class MainViewController: UIViewController {
         var x,y :CGFloat
         if (imgView.frame.size.height/imgView.frame.size.width > imgData.size.height/imgData.size.width){
             let imgX = imgView.frame.origin.x
-            let imgY = imgView.frame.origin.y + (imgView.frame.height - (imgView.frame.width / imgData.size.width)*imgData.size.height) / 2
+            let imgY = imgView.frame.origin.y + 0.50*(imgView.frame.height - ((imgView.frame.width / imgData.size.width)*imgData.size.height))
             let imgWidth = imgView.frame.width
-            let imgHeight = imgView.frame.height - (imgView.frame.width / imgData.size.width)*imgData.size.height
+            let imgHeight = (imgView.frame.width/imgData.size.width)*imgData.size.height
             x = imgData.size.width*(tappedPoint.x - imgX)/imgWidth
             y = imgData.size.height*(tappedPoint.y - imgY)/imgHeight
         }
         else{
-            let imgX = imgView.frame.origin.x + (imgView.frame.width - (imgView.frame.height / imgData.size.height)*imgData.size.width) / 2
+            let imgX = imgView.frame.origin.x + 0.5*(imgView.frame.width - ((imgView.frame.height / imgData.size.height)*imgData.size.width))
             let imgY = imgView.frame.origin.y
-            let imgWidth = imgView.frame.width - (imgView.frame.height / imgData.size.height)*imgData.size.width
+            let imgWidth = (imgView.frame.height/imgData.size.height)*imgData.size.width
             let imgHeight = imgView.frame.height
             x = imgData.size.width*(tappedPoint.x - imgX)/imgWidth
             y = imgData.size.height*(tappedPoint.y - imgY)/imgHeight
@@ -227,16 +227,16 @@ class MainViewController: UIViewController {
         let scale: CGFloat = 0
         UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
         image.draw(at: CGPoint.zero)
-        for position in backend.box_position {
+        for box in backend.box_position {
             let drawPath = UIBezierPath()
             // Starting point (left-up corner)
-            let leftUp = CGPoint(x: position.origin.x * imageSize.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height)
+            let leftUp = CGPoint(x: box.position.origin.x * imageSize.width, y: (CGFloat(1.0) - box.position.origin.y) * imageSize.height - box.position.height * imageSize.height)
             // Right-up corner
-            let rightUp = CGPoint(x: position.origin.x * imageSize.width + imageSize.width * position.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height)
+            let rightUp = CGPoint(x: box.position.origin.x * imageSize.width + imageSize.width * box.position.width, y: (CGFloat(1.0) - box.position.origin.y) * imageSize.height - box.position.height * imageSize.height)
             // Right-down corner
-            let rightDown = CGPoint(x: position.origin.x * imageSize.width + imageSize.width * position.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height + position.height * imageSize.height)
+            let rightDown = CGPoint(x: box.position.origin.x * imageSize.width + imageSize.width * box.position.width, y: (CGFloat(1.0) - box.position.origin.y) * imageSize.height - box.position.height * imageSize.height + box.position.height * imageSize.height)
             // Ending point (left-down corner)
-            let leftDown = CGPoint(x: position.origin.x * imageSize.width, y: (CGFloat(1.0) - position.origin.y) * imageSize.height - position.height * imageSize.height + position.height * imageSize.height)
+            let leftDown = CGPoint(x: box.position.origin.x * imageSize.width, y: (CGFloat(1.0) - box.position.origin.y) * imageSize.height - box.position.height * imageSize.height + box.position.height * imageSize.height)
             
             drawPath.move(to: leftUp)
             drawPath.addLine(to: rightUp)
@@ -271,7 +271,6 @@ class MainViewController: UIViewController {
             num_button.frame = CGRect(x: width * CGFloat(i) , y: 0, width: width, height: 50)
             num_button.setTitle(String(backend.value[i]), for: .normal)
             num_button.addTarget(self, action: #selector(buttonAction), for: .touchDown)
-//            num_button.backgroundColor = UIColor.darkGray
             num_stack.addSubview(num_button)
         }
         num_stack.contentSize = CGSize(width: contentWidth, height: 50)
@@ -313,5 +312,28 @@ class MainViewController: UIViewController {
     }
     */
 
+    // touch position reflected to image
+    // screen touch position (first touch position)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("in touchesBegan")
+        if let touch = touches.first {
+            var point: CGPoint = touch.location(in: imgView)
+            point = (self.imgView?.convert(point, to: self.view))!
+            point = getTappedPointOnImg(tappedPoint: point)
+            backend.deal_with_box()
+            expressionBar.text = backend.chcek_box(pts: point, equation: expressionBar.text!)
+            print(point)
+        }
+    }
 
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        if let touch = touches.first {
+//            print("touch end: \(touch.location(in: self.view))")
+//            swipe_end = touch.location(in: self.view)
+//            swipe_end.y -= 20
+//            swipe_end = getTappedPointOnImg(tappedPoint: swipe_end)
+//            // do crop image here
+//            crop_image()
+//        }
+//    }
 }

@@ -301,13 +301,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5XN2U29MG;
+				DEVELOPMENT_TEAM = ZRBQP3R27R;
 				INFOPLIST_FILE = camcat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = blocks.camcat;
+				PRODUCT_BUNDLE_IDENTIFIER = "Assignment2.Disappearing-Unicorns";
 				PRODUCT_NAME = CamCat;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
