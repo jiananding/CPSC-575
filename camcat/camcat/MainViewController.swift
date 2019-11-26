@@ -22,7 +22,7 @@ class MainViewController: UIViewController {
     var undoButton:UIButton!
     var equalSign:UILabel!
     var resultLabel:UILabel!
-    var num_stack: UIScrollView!
+//    var num_stack: UIScrollView!
     var backGround:UILabel!
         
     var backend = BackEnd()
@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
         
         backend.read()
         imgView.image = drawRectangleOnImage(image: imgData)
-        create_num_stack()
+//        create_num_stack()
     }
     
     func prepareView(){
@@ -66,11 +66,11 @@ class MainViewController: UIViewController {
         subButton.addTarget(self, action: #selector(signButtonAction), for: .touchDown)
         view.addSubview(subButton)
         
-        multiButton = getOperator(title: "*", x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        multiButton = getOperator(title: "\u{00D7}", x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         multiButton.addTarget(self, action: #selector(signButtonAction), for: .touchDown)
         view.addSubview(multiButton)
         
-        divButton = getOperator(title: "/", x: UIScreen.main.bounds.size.width/5*3 + 10,
+        divButton = getOperator(title: "÷", x: UIScreen.main.bounds.size.width/5*3 + 10,
                                 y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         divButton.addTarget(self, action: #selector(signButtonAction), for: .touchDown)
         view.addSubview(divButton)
@@ -203,6 +203,8 @@ class MainViewController: UIViewController {
             point = getTappedPointOnImg(tappedPoint: point)
             backend.deal_with_box()
             expressionBar.text = backend.chcek_box(pts: point, equation: expressionBar.text!)
+            backend.calculation(expressionBar.text!)
+            updateResult()
         }
     }
     
@@ -278,33 +280,33 @@ class MainViewController: UIViewController {
     //---End of Draw Function---
 
     //---Add Num Button Action---
-    func create_num_stack() {
-        num_stack = UIScrollView(frame: CGRect(x: 0, y: view.frame.height * 0.75, width: UIScreen.main.bounds.size.width, height: 50))
-        num_stack.sizeToFit()
-        num_stack.layoutIfNeeded()
-        num_stack.backgroundColor = .systemBackground
-        var contentWidth: CGFloat = 0.0
-        
-        let length = backend.value.count
-        let width = (num_stack.frame.width / CGFloat(5.0))
-        for i in 0..<length {
-            contentWidth += width
-            let num_button = UIButton(type: .system)
-            num_button.tag = i
-            num_button.frame = CGRect(x: width * CGFloat(i) , y: 0, width: width, height: 50)
-            num_button.setTitle(String(backend.value[i]), for: .normal)
-            num_button.addTarget(self, action: #selector(buttonAction), for: .touchDown)
-            num_stack.addSubview(num_button)
-        }
-        num_stack.contentSize = CGSize(width: contentWidth, height: 50)
-        self.view.addSubview(num_stack)
-    }
-    
-    @objc func buttonAction(sender: UIButton!) {
-        expressionBar.text?.append(sender.titleLabel!.text! + " ")
-        backend.calculation(expressionBar.text!)
-        updateResult()
-    }
+//    func create_num_stack() {
+//        num_stack = UIScrollView(frame: CGRect(x: 0, y: view.frame.height * 0.75, width: UIScreen.main.bounds.size.width, height: 50))
+//        num_stack.sizeToFit()
+//        num_stack.layoutIfNeeded()
+//        num_stack.backgroundColor = .systemBackground
+//        var contentWidth: CGFloat = 0.0
+//
+//        let length = backend.value.count
+//        let width = (num_stack.frame.width / CGFloat(5.0))
+//        for i in 0..<length {
+//            contentWidth += width
+//            let num_button = UIButton(type: .system)
+//            num_button.tag = i
+//            num_button.frame = CGRect(x: width * CGFloat(i) , y: 0, width: width, height: 50)
+//            num_button.setTitle(String(backend.value[i]), for: .normal)
+//            num_button.addTarget(self, action: #selector(buttonAction), for: .touchDown)
+//            num_stack.addSubview(num_button)
+//        }
+//        num_stack.contentSize = CGSize(width: contentWidth, height: 50)
+//        self.view.addSubview(num_stack)
+//    }
+//
+//    @objc func buttonAction(sender: UIButton!) {
+//        expressionBar.text?.append(sender.titleLabel!.text! + " ")
+//        backend.calculation(expressionBar.text!)
+//        updateResult()
+//    }
     
     @objc func signButtonAction(sender: UIButton!) {
         expressionBar.text?.append(sender.titleLabel!.text! + " ")

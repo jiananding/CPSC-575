@@ -33,7 +33,7 @@ class BackEnd {
                 guard let candidate = visionReasult.topCandidates(maximumCanadiates).first else {
                     continue
                 }
-                print(candidate.string)
+                //print(candidate.string)
                 
                 var arr: [Double] = []
                 let strArr = candidate.string.split(separator: " ")
@@ -58,6 +58,7 @@ class BackEnd {
     
     // Do the calculation
     func calculation(_ equation: String) {
+        print("doing calculation")
         if checkRight(equation) {
             //let numericExpression = equation
             let numericExpression = changeExpression(equation)
@@ -94,14 +95,16 @@ class BackEnd {
         let arr = expression.split(separator: " ")
         let le = arr.count
         
-        if (numLeft != numRight || (numRight == 0 && numLeft == 0)) {
+        if (numLeft != numRight) {
             return false
         } else {
-            let indexLeftB = arr.lastIndex(of: "(")!
-            let indexRightB = arr.lastIndex(of: ")")!
-            
-            if (indexLeftB > indexRightB) {
-                return false
+            if (numLeft != 0 && numRight != 0) {
+                let indexLeftB = arr.lastIndex(of: "(")!
+                let indexRightB = arr.lastIndex(of: ")")!
+                
+                if (indexLeftB > indexRightB) {
+                    return false
+                }
             }
         }
         

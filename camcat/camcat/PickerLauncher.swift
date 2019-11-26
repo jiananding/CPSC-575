@@ -11,12 +11,6 @@
 import Foundation
 import UIKit
 
-struct CellData {
-    //let image: UIImage?
-    //let country_name: String?
-    let currency_code: String?
-}
-
 class PickerLauncher: NSObject{
     
     var main_view = UIView()
