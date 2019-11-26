@@ -56,9 +56,11 @@ class BackEnd {
         try? requestHandler.perform([request])
      }
     
+    // Do the calculation
     func calculation(_ equation: String) {
         if checkRight(equation) {
-            let numericExpression = equation
+            //let numericExpression = equation
+            let numericExpression = changeExpression(equation)
             let expression = NSExpression(format: numericExpression)
             let expression_result = expression.expressionValue(with: nil, context: nil) as! NSNumber
             result = expression_result.stringValue
@@ -67,38 +69,91 @@ class BackEnd {
         }
     }
     
+    // Change the "÷" and "x" into "/" and the "*"
+    func changeExpression(_ equation: String) -> String {
+        var arr = equation.split(separator: " ")
+        let le = arr.count
+        for i in 0..<le {
+            if (arr[i] == "÷") {
+                arr[i] = "/"
+            }
+            if (arr[i] == "\u{00D7}") {
+                arr[i] = "*"
+            }
+        }
+        let equ = arr.joined(separator: " ")
+        return equ
+    }
+    
+    // Check the equation is right or not
     func checkRight(_ expression: String) -> Bool {
+        
+        let numLeft = expression.filter{$0 == "("}.count
+        let numRight = expression.filter{$0 == ")"}.count
+        
+        if (numLeft != numRight) {
+            return false
+        }
+        
         let arr = expression.split(separator: " ")
         let le = arr.count
+        
+        let indexLeftB = arr.lastIndex(of: "(")!
+        let indexRightB = arr.lastIndex(of: ")")!
+        
+        if (indexLeftB > indexRightB) {
+            return false
+        }
         // the first place cannot be the operator except minus operator and the last place cannot be the operator either.
         if (le == 0) {
             return false
         } else if (le == 1) {
-            if (arr[0] == "*" || arr[0] == "/" || arr[0] == "+" ) {
+            if (arr[0] == "\u{00D7}" || arr[0] == "÷" || arr[0] == "+" || arr[0] == "(" || arr[0] == ")") {
                 return false
             }
         } else if (le == 2) { //the first place must be minus operator
             if (arr[0] == "-"){
-                if (arr[le - 1] == "*" || arr[le - 1] == "/" || arr[le - 1] == "-" || arr[le - 1] == "+") {
+                if (arr[1] == "\u{00D7}" || arr[1] == "÷" || arr[1] == "-" || arr[1] == "+" || arr[1] == "(" || arr[1] == ")") {
                     return false
                 }
             } else {
                 return false
             }
         } else if (le >= 3) {
-            if (arr[le - 1] == "+" || arr[le - 1] == "-" || arr[le - 1] == "*" || arr[le - 1] == "/") {
+            if (arr[le - 1] == "+" || arr[le - 1] == "-" || arr[le - 1] == "\u{00D7}" || arr[le - 1] == "÷" || arr[le - 1] == "(") {
                 return false
             }
-            if (arr[0] == "+" || arr[0] == "*" || arr[0] == "/") {
+            if (arr[0] == "+" || arr[0] == "\u{00D7}" || arr[0] == "÷" || arr[0] == ")") {
                 return false
             }
             for i in 1..<(le-1) {
-                if (arr[i] == "*" || arr[i] == "/" || arr[i] == "+" || arr[i] == "-") {
-                    if (arr[i-1] == "*" || arr[i-1] == "/" || arr[i-1] == "+" || arr[i-1] == "-" || arr[i+1] == "*" || arr[i+1] == "/" || arr[i+1] == "+" || arr[i+1] == "-") {
+                
+                if (arr[i] == "(") {
+                    if (arr[i-1] == ")" || arr[i+1] == ")") {
+                        return false
+                    }
+                }
+                
+                if (arr[i] == ")") {
+                    if (arr[i-1] == "(" || arr[i+1] == "(") {
+                        return false
+                    }
+                }
+                
+                if (arr[i] == "\u{00D7}" || arr[i] == "÷" || arr[i] == "+" || arr[i] == "-") {
+                    if (arr[i-1] == "\u{00D7}" || arr[i-1] == "÷" || arr[i-1] == "+" || arr[i-1] == "-" || arr[i+1] == "\u{00D7}" || arr[i+1] == "÷" || arr[i+1] == "+" || arr[i+1] == "-") {
+                        return false
+                    }
+                } else if (arr[i] == "(") {
+                    if (arr[i+1] == "\u{00D7}" || arr[i+1] == "÷" || arr[i+1] == "+" || arr[i+1] == "-" || arr[i+1] == ")" || arr[i-1] == ")") {
+                        return false
+                    }
+                } else if (arr[i] == ")") {
+                    if (arr[i-1] == "\u{00D7}" || arr[i-1] == "÷" || arr[i-1] == "+" || arr[i-1] == "-" || arr[i-1] == "(" || arr[i+1]  == "(") {
                         return false
                     }
                 } else {
-                    if ((arr[i-1] != "*" && arr[i-1] != "/" && arr[i-1] != "+" && arr[i-1] != "-") || (arr[i+1] != "*" && arr[i+1] != "/" && arr[i+1] != "+" && arr[i+1] != "-")) {
+                    if ((arr[i-1] != "\u{00D7}" && arr[i-1] != "÷" && arr[i-1] != "+" && arr[i-1] != "-" && arr[i-1] != "(") || (arr[i+1] != "\u{00D7}" && arr[i+1] != "÷" && arr[i+1] != "+" && arr[i+1] != "-" && arr[i+1] != ")")) {
                         return false
                     }
                 }
