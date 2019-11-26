@@ -26,6 +26,7 @@ class MainViewController: UIViewController {
     var backGround:UILabel!
         
     var backend = BackEnd()
+    var pickerLauncher = PickerLauncher()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,9 +161,12 @@ class MainViewController: UIViewController {
         imgView.addGestureRecognizer(panMethod)
         imgView.addGestureRecognizer(tapMethod)
 
-        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))   //Swipe Screenedge to pop Mainview
-        edgePan.edges = .left
-        view.addGestureRecognizer(edgePan)
+        let leftEdgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwipedLeft))   //Swipe Screenedge to pop Mainview
+        leftEdgePan.edges = .left
+        let rightEdgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwipedRight))
+        rightEdgePan.edges = .right
+        view.addGestureRecognizer(leftEdgePan)
+        view.addGestureRecognizer(rightEdgePan)
     }
     
     //---Gesture Recognition Methods Start---
@@ -202,11 +206,18 @@ class MainViewController: UIViewController {
         }
     }
     
-    @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-        print("Screenedge-swipe Detected")
+    @objc func screenEdgeSwipedLeft(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        print("Screenedge-swipe left Detected")
         if recognizer.state == .recognized {
             self.navigationController?.popViewController(animated: true) //Pop current page
             backend.box_position.removeAll()
+        }
+    }
+    
+    @objc func screenEdgeSwipedRight(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        print("Screenedge-swipe right Detected")
+        if recognizer.state == .recognized {
+            pickerLauncher.showPicker(own_view: view)
         }
     }
     
