@@ -8,15 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var base_button: UIButton!
-    @IBOutlet weak var target_button: UIButton!
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate{
+
+    
+    @IBOutlet weak var base_picker: UIPickerView!
+    @IBOutlet weak var target_picker: UIPickerView!
     
     @IBOutlet weak var init_value: UITextField!
     @IBOutlet weak var converted_value: UILabel!
-    
-    @IBOutlet weak var base_picker: UIScrollView!
-    @IBOutlet weak var target_picker: UIScrollView!
         
     var date: String = ""
 
@@ -34,19 +33,21 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // converted value change while textfield text editing changed
-        // handleMore()
-
         init_value.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        //creacte_picker1()
-        //creacte_picker2()
-        getLatest()
-
         
+        base_picker.delegate = self
+        base_picker.dataSource = self
+        
+        target_picker.delegate = self
+        target_picker.dataSource = self
+        
+        init_value.delegate = self
+        
+        getLatest()
     }
-
+    
     func getLatest() {
-        let apiEndPoint = "https://api.exchangeratesapi.io/latest?base=\(base_button.titleLabel!.text!)"
+        let apiEndPoint = "https://api.exchangeratesapi.io/latest?base=\(selection[base_picker.selectedRow(inComponent: 0)])"
         guard let url = URL(string: apiEndPoint) else {return}
         
         let task = URLSession.shared.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
@@ -69,7 +70,8 @@ class ViewController: UIViewController {
                     self.exchangeRates.updateValue(rate!, forKey: currency)
                 }
                 OperationQueue.main.addOperation({
-                    self.calculate(init_val: 1.0)
+                    let val = Double(self.init_value.text!)
+                    self.calculate(init_val: val!)
                     self.date = date
                 })
             }
@@ -81,7 +83,7 @@ class ViewController: UIViewController {
     }
     
     func calculate(init_val: Double) {
-        let rate = exchangeRates[target_button.titleLabel!.text!]
+        let rate = exchangeRates[selection[target_picker.selectedRow(inComponent: 0)]]
         converted_value.text = String(format: "%.4f", init_val * rate!)
     }
     
@@ -93,68 +95,40 @@ class ViewController: UIViewController {
             calculate(init_val: 1.0)
         }
     }
+
+//    let pickerLauncher = PickerLauncher()
 //
-//    func creacte_picker1() {
-//        base_picker.sizeToFit()
-//        base_picker.layoutIfNeeded()
-//        base_picker.backgroundColor = .darkGray
-//        var contentWidth: CGFloat = 0.0
-//
-//        let length = selection.count
-//        let width = (base_picker.frame.width / CGFloat(5.0))
-//        for i in 0..<length {
-//            contentWidth += width
-//            let currency_button = UIButton(type: .system)
-//            currency_button.tag = i
-//            currency_button.frame = CGRect(x: width * CGFloat(i) , y: 0, width: width, height: 50)
-//            currency_button.setTitle(String(selection[i]), for: .normal)
-//            currency_button.addTarget(self, action: #selector(buttonAction1), for: .touchDown)
-//            currency_button.backgroundColor = UIColor.darkGray
-//            base_picker.addSubview(currency_button)
-//        }
-//        base_picker.contentSize = CGSize(width: contentWidth, height: 50)
+//    @IBAction func base_button_label(_ sender: Any) {
+//        pickerLauncher.showPicker(own_view: view)
 //    }
 //
-//    func creacte_picker2() {
-//        target_picker.sizeToFit()
-//        target_picker.layoutIfNeeded()
-//        target_picker.backgroundColor = .darkGray
-//        var contentWidth: CGFloat = 0.0
-//
-//        let length = selection.count
-//        let width = (target_picker.frame.width / CGFloat(5.0))
-//        for i in 0..<length {
-//            contentWidth += width
-//            let currency_button = UIButton(type: .system)
-//            currency_button.tag = i
-//            currency_button.frame = CGRect(x: width * CGFloat(i) , y: 0, width: width, height: 50)
-//            currency_button.setTitle(String(selection[i]), for: .normal)
-//            currency_button.addTarget(self, action: #selector(buttonAction2), for: .touchDown)
-//            currency_button.backgroundColor = UIColor.darkGray
-//            target_picker.addSubview(currency_button)
-//        }
-//        target_picker.contentSize = CGSize(width: contentWidth, height: 50)
-//    }
-//
-//    @objc func buttonAction1(sender: UIButton!) {
-//        base_label.text = sender.titleLabel?.text
-//        getLatest()
-//    }
-//
-//    @objc func buttonAction2(sender: UIButton!) {
-//        target_label.text = sender.titleLabel?.text
-//        self.calculate(init_val: 1.0)
+//    @IBAction func target_button_label(_ sender: Any) {
+//        pickerLauncher.showPicker(own_view: view)
 //    }
     
-    
-    let pickerLauncher = PickerLauncher()
-    
-    @IBAction func base_button_label(_ sender: Any) {
-        pickerLauncher.showPicker(own_view: view)
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
-    @IBAction func target_button_label(_ sender: Any) {
-        pickerLauncher.showPicker(own_view: view)
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return selection.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return selection[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        getLatest()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        init_value.resignFirstResponder()
+        return true
     }
 }
-

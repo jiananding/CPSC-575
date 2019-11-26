@@ -22,7 +22,7 @@ class PickerLauncher: NSObject{
     var main_view = UIView()
     let blackView = UIView()
     
-    let menu = UITableView()
+    let menu = UIView()
     
     var currency_code_string: [String] =
         ["AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "GBP", "HKD", "HRK", "HUF", "IDR", "ILS",
@@ -62,7 +62,7 @@ class PickerLauncher: NSObject{
     }
     
     func setUpMenu() {
-        
+        //
     }
     
   
