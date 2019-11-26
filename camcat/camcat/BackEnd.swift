@@ -91,19 +91,20 @@ class BackEnd {
         let numLeft = expression.filter{$0 == "("}.count
         let numRight = expression.filter{$0 == ")"}.count
         
-        if (numLeft != numRight) {
-            return false
-        }
-        
         let arr = expression.split(separator: " ")
         let le = arr.count
         
-        let indexLeftB = arr.lastIndex(of: "(")!
-        let indexRightB = arr.lastIndex(of: ")")!
-        
-        if (indexLeftB > indexRightB) {
+        if (numLeft != numRight || (numRight == 0 && numLeft == 0)) {
             return false
+        } else {
+            let indexLeftB = arr.lastIndex(of: "(")!
+            let indexRightB = arr.lastIndex(of: ")")!
+            
+            if (indexLeftB > indexRightB) {
+                return false
+            }
         }
+        
         // the first place cannot be the operator except minus operator and the last place cannot be the operator either.
         if (le == 0) {
             return false
