@@ -54,6 +54,7 @@ class Currency_exchange: UIViewController, UITableViewDataSource, UITableViewDel
         view.addSubview(init_value)
         view.addSubview(converted_value)
         getLatest()
+        prepareGestureRecog()
     }
 
     func getLatest() {
@@ -182,5 +183,18 @@ class Currency_exchange: UIViewController, UITableViewDataSource, UITableViewDel
         //handleDismiss()
 
     }
+    
+    func prepareGestureRecog() {
+            let leftEdgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwipedLeft))   //Swipe Screenedge to pop Mainview
+            leftEdgePan.edges = .left
+            view.addGestureRecognizer(leftEdgePan)
+        }
+    
+    @objc func screenEdgeSwipedLeft(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+    //        print("Screenedge-swipe left Detected")
+            if recognizer.state == .recognized {
+                self.navigationController?.popViewController(animated: true) //Pop current page
+            }
+        }
 }
 

@@ -280,6 +280,7 @@ class MainViewController: UIViewController, UITextViewDelegate {
     @objc func screenEdgeSwipedRight(_ recognizer: UIScreenEdgePanGestureRecognizer) {
 //        print("Screenedge-swipe right Detected")
         if recognizer.state == .recognized {
+            main_menu.initNaviController(NaviController: self.navigationController!)
             main_menu.showPicker(own_view: view)
         }
     }

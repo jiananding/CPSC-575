@@ -19,6 +19,8 @@ class MainMenu: NSObject, UITableViewDelegate, UITableViewDataSource{
     
     let selection: [String] = ["Currency Exchange", "Unit Convertor"]
 
+    var currentNavigationController: UINavigationController!
+    
     func showPicker(own_view: UIView) {
         self.main_view = own_view
                 
@@ -72,11 +74,16 @@ class MainMenu: NSObject, UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.row == 0) {
             // go to currency exchange
+            let currencyView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "currencyExchange") as! Currency_exchange
+            currentNavigationController?.pushViewController(currencyView, animated: true)
         } else if (indexPath.row == 1){
             // go to unit exchange
         }
     }
     
+    func initNaviController(NaviController: UINavigationController){
+        currentNavigationController = NaviController
+    }
     override init() {
         super.init()
     }
