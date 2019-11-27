@@ -17,9 +17,6 @@ class PickerLauncher: NSObject{
     let blackView = UIView()
     
     let menu = UIView()
-    
-    let currency_button = UIButton()
-    let unit_button = UIButton()
 
     func showPicker(own_view: UIView) {
         self.main_view = own_view
@@ -35,11 +32,6 @@ class PickerLauncher: NSObject{
         let x: CGFloat = main_view.frame.width - width
         menu.backgroundColor = UIColor.white
         menu.frame = CGRect(x: main_view.frame.width, y: 0, width: 300, height: main_view.frame.height)
-        
-        currency_button.frame(forAlignmentRect: CGRect(x: 0, y: 0, width: menu.frame.width, height: 50))
-        currency_button.backgroundColor = .green
-        currency_button.setTitle("Currency Exchange", for: .normal)
-        currency_button.addTarget(self, action: #selector(currency_action), for: .touchDown)
         
         blackView.frame = main_view.frame
         blackView.alpha = 0
@@ -58,8 +50,6 @@ class PickerLauncher: NSObject{
             self.menu.frame = CGRect(x: self.main_view.frame.width, y: 0, width: self.menu.frame.width, height: self.menu.frame.height)
         }
     }
-  
-    
     
     override init() {
         super.init()
