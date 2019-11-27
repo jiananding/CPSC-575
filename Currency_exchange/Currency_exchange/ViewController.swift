@@ -9,8 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
-    @IBOutlet weak var base_button: UIButton!
-    @IBOutlet weak var target_button: UIButton!
+    var base_button = UIButton()
+    var target_button = UIButton()
     
     @IBOutlet weak var init_value: UITextField!
     @IBOutlet weak var converted_value: UILabel!
@@ -32,6 +32,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         init_value.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        
+        base_button.frame = CGRect(x: 50, y: 180, width: 150, height: 50)
+        base_button.setTitle("CAD", for: .normal)
+        base_button.backgroundColor = .darkGray
+        base_button.addTarget(self, action: #selector(base_button_label), for: .touchDown)
+        
+
+        target_button.frame = CGRect(x: 50, y: 250, width: 150, height: 50)
+        target_button.backgroundColor = .darkGray
+        target_button.addTarget(self, action: #selector(target_button_label), for: .touchDown)
+        target_button.setTitle("USD", for: .normal)
+        
+        view.addSubview(base_button)
+        view.addSubview(target_button)
         getLatest()
     }
 
@@ -148,13 +162,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (tableView.tag == 1) {
             // base_button
-            base_button.titleLabel?.text = selection[indexPath.row]
+            base_button.setTitle(selection[indexPath.row], for: .normal)
 //            let val = Double(init_value.text!)
 //            calculate(init_val: val!)
         }
         else {
             // target_button
-            target_button.titleLabel?.text = selection[indexPath.row]
+            target_button.setTitle(selection[indexPath.row], for: .normal)
 //
         }
         getLatest()
