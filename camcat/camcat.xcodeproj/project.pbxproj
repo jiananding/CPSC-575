@@ -76,8 +76,8 @@
 				86A9A8AF23692BB700852476 /* LaunchScreen.storyboard */,
 				86A9A8B223692BB700852476 /* Info.plist */,
 				F8095582236D1FAF00C01407 /* MainViewController.swift */,
-				DC9B4C09238CEF700050A9D2 /* PickerLauncher.swift */,
 				DC0D143C236F8614007A5020 /* BackEnd.swift */,
+				DC9B4C09238CEF700050A9D2 /* PickerLauncher.swift */,
 			);
 			path = camcat;
 			sourceTree = "<group>";

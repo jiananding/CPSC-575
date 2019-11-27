@@ -8,14 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate{
-
-    
-    @IBOutlet weak var base_picker: UIPickerView!
-    @IBOutlet weak var target_picker: UIPickerView!
+class ViewController: UIViewController {
+    @IBOutlet weak var base_button: UIButton!
+    @IBOutlet weak var target_button: UIButton!
     
     @IBOutlet weak var init_value: UITextField!
     @IBOutlet weak var converted_value: UILabel!
+    
+    @IBOutlet weak var base_picker: UIScrollView!
+    @IBOutlet weak var target_picker: UIScrollView!
         
     var date: String = ""
 
@@ -25,29 +26,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
          "INR": 0.0, "ISK": 0.0, "JPY": 0.0, "KRW": 0.0, "MXN": 0.0, "MYR": 0.0, "NOK": 0.0,
          "NZD": 0.0, "PHP": 0.0, "PLN": 0.0, "RON": 0.0, "RUB": 0.0, "SEK": 0.0, "SGD": 0.0,
          "THB": 0.0, "TRY": 0.0, "USD": 0.0, "ZAR": 0.0]
-
-    var selection: [String] =
-        ["AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "GBP", "HKD", "HRK", "HUF", "IDR", "ILS",
-         "INR", "ISK", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PLN", "RON", "RUB", "SEK", "SGD",
-         "THB", "TRY", "USD", "ZAR"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         init_value.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        
-        base_picker.delegate = self
-        base_picker.dataSource = self
-        
-        target_picker.delegate = self
-        target_picker.dataSource = self
-        
-        init_value.delegate = self
-        
         getLatest()
     }
-    
+
     func getLatest() {
-        let apiEndPoint = "https://api.exchangeratesapi.io/latest?base=\(selection[base_picker.selectedRow(inComponent: 0)])"
+        let apiEndPoint = "https://api.exchangeratesapi.io/latest?base=\(base_button.titleLabel!.text!)"
         guard let url = URL(string: apiEndPoint) else {return}
         
         let task = URLSession.shared.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
@@ -70,8 +57,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                     self.exchangeRates.updateValue(rate!, forKey: currency)
                 }
                 OperationQueue.main.addOperation({
-                    let val = Double(self.init_value.text!)
-                    self.calculate(init_val: val!)
+                    self.calculate(init_val: 1.0)
                     self.date = date
                 })
             }
@@ -83,7 +69,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func calculate(init_val: Double) {
-        let rate = exchangeRates[selection[target_picker.selectedRow(inComponent: 0)]]
+        let rate = exchangeRates[target_button.titleLabel!.text!]
         converted_value.text = String(format: "%.4f", init_val * rate!)
     }
     
@@ -95,40 +81,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             calculate(init_val: 1.0)
         }
     }
-
-//    let pickerLauncher = PickerLauncher()
-//
-//    @IBAction func base_button_label(_ sender: Any) {
-//        pickerLauncher.showPicker(own_view: view)
-//    }
-//
-//    @IBAction func target_button_label(_ sender: Any) {
-//        pickerLauncher.showPicker(own_view: view)
-//    }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    let pickerLauncher = PickerLauncher()
+    
+    @IBAction func base_button_label(_ sender: Any) {
+        pickerLauncher.showPicker(own_view: view)
     }
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return selection.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return selection[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        getLatest()
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        init_value.resignFirstResponder()
-        return true
+    @IBAction func target_button_label(_ sender: Any) {
+        pickerLauncher.showPicker(own_view: view)
     }
 }
+

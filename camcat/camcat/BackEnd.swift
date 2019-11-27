@@ -63,6 +63,11 @@ class BackEnd {
     // Do the calculation
     func calculation(_ equation: String) {
         print("doing calculation")
+        if equation.isEmpty {
+            result = "0"
+            return
+        }
+        
         if checkRight(equation) {
             //let numericExpression = equation
             let numericExpression = changeExpression(equation)

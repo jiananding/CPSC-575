@@ -22,9 +22,6 @@ class MainViewController: UIViewController {
     var undoButton:UIButton!
     var equalSign:UILabel!
     var resultLabel:UILabel!
-//    var num_stack: UIScrollView!
-    var backGround:UILabel!
-     
     // Add a new textField
 //    var extendText:UISwitch!
 //    var expressionExtendBar:UITextField!
@@ -38,12 +35,11 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         prepareView()
         prepareGestureRecog()
-//        drawSwitch()
         
         backend.read()
         imgView.image = drawRectangleOnImage(image: imgData)
 //        create_num_stack()
-        
+
     }
     
     func prepareView(){
@@ -54,22 +50,6 @@ class MainViewController: UIViewController {
         drawExpressionBar()
     }
     
-//    func drawSwitch(){
-//        extendText = UISwitch(frame:CGRect(x: 300, y: 150, width: 0, height: 0))
-//        extendText.addTarget(self, action: #selector(MainViewController.switchStateChange(_:)), for: .valueChanged)
-//        extendText.setOn(false, animated: false)
-//        self.view.addSubview(extendText)
-//    }
-    
-//    @objc func switchStateChange(_ sender: UISwitch) {
-//        if (sender.isOn == true) {
-//            expressionBar.isHidden = true
-//            expressionExtendBar.isHidden = false
-//        } else {
-//            expressionBar.isHidden = false
-//            expressionExtendBar.isHidden = true
-//        }
-//    }
     
     func drawImageView(){
         imgView = UIImageView(image: imgData)
@@ -114,10 +94,6 @@ class MainViewController: UIViewController {
     }
     
     func drawExpressionBar(){
-//        backGround = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50), height: 30))
-//        backGround.backgroundColor = .systemBackground
-//        backGround.text = "abc"
-//        self.view.addSubview(backGround)
         equalSign = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-100), y: 35, width: 40, height: 30))
         equalSign.text = "     ="
         equalSign.backgroundColor = .systemBackground
@@ -177,7 +153,6 @@ class MainViewController: UIViewController {
         doneToolbar.sizeToFit()
 
         expressionBar.inputAccessoryView = doneToolbar
-//        expressionExtendBar.inputAccessoryView = doneToolbar
         
         resultLabel = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-60), y: 35, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-30)), height: 30))
         resultLabel.text = "0"
@@ -268,7 +243,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func screenEdgeSwipedLeft(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-        print("Screenedge-swipe left Detected")
+//        print("Screenedge-swipe left Detected")
         if recognizer.state == .recognized {
             self.navigationController?.popViewController(animated: true) //Pop current page
             backend.box_position.removeAll()
@@ -276,7 +251,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func screenEdgeSwipedRight(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-        print("Screenedge-swipe right Detected")
+//        print("Screenedge-swipe right Detected")
         if recognizer.state == .recognized {
             pickerLauncher.showPicker(own_view: view)
         }
@@ -337,35 +312,6 @@ class MainViewController: UIViewController {
         return newImage!
     }
     //---End of Draw Function---
-
-    //---Add Num Button Action---
-//    func create_num_stack() {
-//        num_stack = UIScrollView(frame: CGRect(x: 0, y: view.frame.height * 0.75, width: UIScreen.main.bounds.size.width, height: 50))
-//        num_stack.sizeToFit()
-//        num_stack.layoutIfNeeded()
-//        num_stack.backgroundColor = .systemBackground
-//        var contentWidth: CGFloat = 0.0
-//
-//        let length = backend.value.count
-//        let width = (num_stack.frame.width / CGFloat(5.0))
-//        for i in 0..<length {
-//            contentWidth += width
-//            let num_button = UIButton(type: .system)
-//            num_button.tag = i
-//            num_button.frame = CGRect(x: width * CGFloat(i) , y: 0, width: width, height: 50)
-//            num_button.setTitle(String(backend.value[i]), for: .normal)
-//            num_button.addTarget(self, action: #selector(buttonAction), for: .touchDown)
-//            num_stack.addSubview(num_button)
-//        }
-//        num_stack.contentSize = CGSize(width: contentWidth, height: 50)
-//        self.view.addSubview(num_stack)
-//    }
-//
-//    @objc func buttonAction(sender: UIButton!) {
-//        expressionBar.text?.append(sender.titleLabel!.text! + " ")
-//        backend.calculation(expressionBar.text!)
-//        updateResult()
-//    }
     
     @objc func signButtonAction(sender: UIButton!) {
         expressionBar.text?.append(sender.titleLabel!.text! + " ")
@@ -376,57 +322,15 @@ class MainViewController: UIViewController {
     }
     
     @objc func undoButtonAction(sender: UIButton!) {
-        var text1 = expressionBar.text?.split(separator: " ")
-        if text1!.count >= 1 {
-            text1?.removeLast()
-            var full_text1 = text1?.joined(separator: " ")
-            full_text1?.append(" ")
-            expressionBar.text = full_text1
+        var text = expressionBar.text?.split(separator: " ")
+        if text!.count >= 1 {
+            text?.removeLast()
+            var full_text1 = text?.joined(separator: " ")
+            full_text?.append(" ")
+            expressionBar.text = full_text
             backend.calculation(expressionBar.text!)
             updateResult()
         }
-//        var text2 = expressionExtendBar.text?.split(separator: " ")
-//        if text2!.count >= 1 {
-//            text2?.removeLast()
-//            var full_text2 = text2?.joined(separator: " ")
-//            full_text2?.append(" ")
-//            expressionExtendBar.text = full_text2
-//            backend.calculation(expressionExtendBar.text!)
-//            updateResult()
-//        }
     }
     //---End Num Button Action---
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // touch position reflected to image
-    // screen touch position (first touch position)
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let touch = touches.first {
-//            var point: CGPoint = touch.location(in: imgView)
-//            point = (self.imgView?.convert(point, to: self.view))!
-//            point = getTappedPointOnImg(tappedPoint: point)
-//            backend.deal_with_box()
-//            expressionBar.text = backend.chcek_box(pts: point, equation: expressionBar.text!)
-//        }
-//    }
-
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let touch = touches.first {
-//            print("touch end: \(touch.location(in: self.view))")
-//            swipe_end = touch.location(in: self.view)
-//            swipe_end.y -= 20
-//            swipe_end = getTappedPointOnImg(tappedPoint: swipe_end)
-//            // do crop image here
-//            crop_image()
-//        }
-//    }
 }
