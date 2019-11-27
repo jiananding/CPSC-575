@@ -24,7 +24,13 @@ class BackEnd {
     let pickedImage = PickedImage.instance.get().data
    
     func read() {
-        let requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!, options: [:])
+        var requestHandler: VNImageRequestHandler
+        print(PickedImage.camera)
+        if PickedImage.camera {
+            requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!, orientation: .right ,options: [:])
+        } else {
+            requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!,options: [:])
+        }
               
         let request = VNRecognizeTextRequest { (request, error) in
             guard let results = request.results as? [VNRecognizedTextObservation] else {return}

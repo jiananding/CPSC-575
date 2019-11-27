@@ -11,11 +11,10 @@ import UIKit
 class PickedImage{
     var data:UIImage?
     static let instance = PickedImage()
-
+    static var camera = Bool()
     func get() -> PickedImage {
         return .instance
     }
-    
     private init(){
         // Do nothing
     }
@@ -28,6 +27,7 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet var libraryButton: UIButton!
     @IBOutlet var cameraButton: UIButton!
     var count = 1
+    var camera = Bool() // true for camera, fasle for library
     
     @IBAction func useCamera(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
@@ -36,6 +36,7 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
             imagePicker.sourceType = UIImagePickerController.SourceType.camera
             imagePicker.allowsEditing = false
             present(imagePicker, animated: true, completion: nil)
+            camera = true
         }
     }
     
@@ -46,6 +47,7 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
             imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
             imagePicker.allowsEditing = false
             present(imagePicker, animated: true, completion: nil)
+            camera = false
         }
     }
     
@@ -55,6 +57,7 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
         imgPreview.image = info[.originalImage] as? UIImage
         let pickedImage = PickedImage.instance.get()
         pickedImage.data = info[.originalImage] as? UIImage
+        PickedImage.camera = camera
     }
     
     @IBAction func calculation(_ sender: Any) {
@@ -77,12 +80,13 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidAppear(_ animated: Bool) {
         if count == 1{
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
-                       let imagePicker = UIImagePickerController()
-                       imagePicker.delegate = self
-                       imagePicker.sourceType = UIImagePickerController.SourceType.camera
-                       imagePicker.allowsEditing = false
-                       present(imagePicker, animated: true, completion: nil)
-                   }
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerController.SourceType.camera
+                imagePicker.allowsEditing = false
+                present(imagePicker, animated: true, completion: nil)
+                camera = true
+                }
             self.count = 0
         }
     }
