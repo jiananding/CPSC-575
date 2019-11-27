@@ -27,6 +27,7 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet var calculateButton: UIButton!
     @IBOutlet var libraryButton: UIButton!
     @IBOutlet var cameraButton: UIButton!
+    var count = 1
     
     @IBAction func useCamera(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
@@ -71,6 +72,19 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if count == 1{
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
+                       let imagePicker = UIImagePickerController()
+                       imagePicker.delegate = self
+                       imagePicker.sourceType = UIImagePickerController.SourceType.camera
+                       imagePicker.allowsEditing = false
+                       present(imagePicker, animated: true, completion: nil)
+                   }
+            self.count = 0
+        }
     }
     
     func setUp() {

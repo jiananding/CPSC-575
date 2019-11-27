@@ -179,7 +179,7 @@ class BackEnd {
 
         for box in real_box_position {
             if box.position.contains(pts) && !box.nums.isEmpty {
-                result.append("\(box.nums[0]) ")
+                result.append("\(box.nums[0])")
                 return result
             }
         }

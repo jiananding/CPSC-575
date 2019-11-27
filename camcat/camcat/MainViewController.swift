@@ -105,14 +105,16 @@ class MainViewController: UIViewController {
 
         let emptySpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
-        let leftBracket: UIBarButtonItem = UIBarButtonItem(title: "(", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.bracket))
-        let rightBracket: UIBarButtonItem = UIBarButtonItem(title: ")", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.bracket))
+        let leftBracket: UIBarButtonItem = UIBarButtonItem(title: "(", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.leftBracket))
+        let rightBracket: UIBarButtonItem = UIBarButtonItem(title: ")", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.rightBracket))
         
         let items = [emptySpace, leftBracket, emptySpace, rightBracket, emptySpace, done]
         doneToolbar.items = items
         doneToolbar.sizeToFit()
 
         expressionBar.inputAccessoryView = doneToolbar
+        expressionBar.addTarget(self, action: #selector(self.floatOperationBar), for: .editingDidBegin)
+        expressionBar.addTarget(self, action: #selector(self.updateExpressionBar), for: .editingChanged)
         
         resultLabel = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-60), y: 35, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-30)), height: 30))
         resultLabel.text = "0"
@@ -124,17 +126,41 @@ class MainViewController: UIViewController {
         resultLabel.text = backend.result
     }
     
-    @objc func doneButtonAction() {
-        expressionBar.resignFirstResponder()
-        expressionBar.text!.append(" ")
+    @objc func updateExpressionBar(){
         backend.calculation(expressionBar.text!)
         updateResult()
     }
     
-    @objc func bracket(sender: UIBarButtonItem){
+    @objc func doneButtonAction() {
+        expressionBar.resignFirstResponder()
+//        expressionBar.text!.append(" ")
+        backend.calculation(expressionBar.text!)
+        updateResult()
+        addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        divButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*3 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        undoButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+    }
+    
+    @objc func leftBracket(sender: UIBarButtonItem){
         expressionBar.text?.append(sender.title! + " ")
         backend.calculation(expressionBar.text!)
         updateResult()
+    }
+    
+    @objc func rightBracket(sender: UIBarButtonItem){
+        expressionBar.text?.append(" " + sender.title!)
+        backend.calculation(expressionBar.text!)
+        updateResult()
+    }
+    
+    @objc func floatOperationBar(){
+        addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        divButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*3 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        undoButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
     }
     
     func prepareGestureRecog() {
@@ -267,7 +293,7 @@ class MainViewController: UIViewController {
     //---End of Draw Function---
     
     @objc func signButtonAction(sender: UIButton!) {
-        expressionBar.text?.append(sender.titleLabel!.text! + " ")
+        expressionBar.text?.append(" " + sender.titleLabel!.text! + " ")
         backend.calculation(expressionBar.text!)
         updateResult()
     }
