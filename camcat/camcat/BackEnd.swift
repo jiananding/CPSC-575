@@ -20,14 +20,11 @@ class BackEnd {
     var real_box_position: [Box] = []
     var value: [Double] = []
     var result: String = ""
-    
-    let image = UIImage(named: "download")
-    
+        
     let pickedImage = PickedImage.instance.get().data
     
     func read() {
-//        let requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!, options: [:])
-        let requestHandler = VNImageRequestHandler(data: image!.pngData()!, options: [:])
+        let requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!, options: [:])
               
         let request = VNRecognizeTextRequest { (request, error) in
             guard let results = request.results as? [VNRecognizedTextObservation] else {return}
@@ -97,82 +94,11 @@ class BackEnd {
     
     // Check the equation is right or not
     func checkRight(_ expression: String) -> Bool {
-        
-        let numLeft = expression.filter{$0 == "("}.count
-        let numRight = expression.filter{$0 == ")"}.count
-        
-        let arr = expression.split(separator: " ")
-        let le = arr.count
-        
-        if (numLeft != numRight) {
+        if let result = ExpressionEvaluator.getValue(expression){
+            return true
+        }else{
             return false
-        } else {
-            if (numLeft != 0 && numRight != 0) {
-                let indexLeftB = arr.lastIndex(of: "(")!
-                let indexRightB = arr.lastIndex(of: ")")!
-                
-                if (indexLeftB > indexRightB) {
-                    return false
-                }
-            }
         }
-        
-        // the first place cannot be the operator except minus operator and the last place cannot be the operator either.
-        if (le == 0) {
-            return false
-        } else if (le == 1) {
-            if (arr[0] == "\u{00D7}" || arr[0] == "÷" || arr[0] == "+" || arr[0] == "(" || arr[0] == ")") {
-                return false
-            }
-        } else if (le == 2) { //the first place must be minus operator
-            if (arr[0] == "-"){
-                if (arr[1] == "\u{00D7}" || arr[1] == "÷" || arr[1] == "-" || arr[1] == "+" || arr[1] == "(" || arr[1] == ")") {
-                    return false
-                }
-            } else {
-                return false
-            }
-        } else if (le >= 3) {
-            if (arr[le - 1] == "+" || arr[le - 1] == "-" || arr[le - 1] == "\u{00D7}" || arr[le - 1] == "÷" || arr[le - 1] == "(") {
-                return false
-            }
-            if (arr[0] == "+" || arr[0] == "\u{00D7}" || arr[0] == "÷" || arr[0] == ")") {
-                return false
-            }
-            for i in 1..<(le-1) {
-                
-                if (arr[i] == "(") {
-                    if (arr[i-1] == ")" || arr[i+1] == ")") {
-                        return false
-                    }
-                }
-                
-                if (arr[i] == ")") {
-                    if (arr[i-1] == "(" || arr[i+1] == "(") {
-                        return false
-                    }
-                }
-                
-                if (arr[i] == "\u{00D7}" || arr[i] == "÷" || arr[i] == "+" || arr[i] == "-") {
-                    if (arr[i-1] == "\u{00D7}" || arr[i-1] == "÷" || arr[i-1] == "+" || arr[i-1] == "-" || arr[i+1] == "\u{00D7}" || arr[i+1] == "÷" || arr[i+1] == "+" || arr[i+1] == "-") {
-                        return false
-                    }
-                } else if (arr[i] == "(") {
-                    if (arr[i+1] == "\u{00D7}" || arr[i+1] == "÷" || arr[i+1] == "+" || arr[i+1] == "-" || arr[i+1] == ")" || arr[i-1] == ")") {
-                        return false
-                    }
-                } else if (arr[i] == ")") {
-                    if (arr[i-1] == "\u{00D7}" || arr[i-1] == "÷" || arr[i-1] == "+" || arr[i-1] == "-" || arr[i-1] == "(" || arr[i+1]  == "(") {
-                        return false
-                    }
-                } else {
-                    if ((arr[i-1] != "\u{00D7}" && arr[i-1] != "÷" && arr[i-1] != "+" && arr[i-1] != "-" && arr[i-1] != "(") || (arr[i+1] != "\u{00D7}" && arr[i+1] != "÷" && arr[i+1] != "+" && arr[i+1] != "-" && arr[i+1] != ")")) {
-                        return false
-                    }
-                }
-            }
-        }
-        return true
     }
     
     func chcek_box(pts: CGPoint, equation: String) -> String{

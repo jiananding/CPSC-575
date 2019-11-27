@@ -22,14 +22,11 @@ class MainViewController: UIViewController, UITextViewDelegate {
     var undoButton:UIButton!
     var equalSign:UILabel!
     var resultLabel:UILabel!
-    // Add a new textField
-//    var extendText:UISwitch!
-//    var expressionExtendBar:UITextField!
     
     let expressionBar = UITextView()
     
     var backend = BackEnd()
-    var pickerLauncher = PickerLauncher()
+    var main_menu = MainMenu()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,9 +96,9 @@ class MainViewController: UIViewController, UITextViewDelegate {
         equalSign.backgroundColor = .systemBackground
         self.view.addSubview(equalSign)
 
-        expressionBar.frame = CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 30)
+        expressionBar.frame = CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 50)
         expressionBar.keyboardType = UIKeyboardType.decimalPad
-        expressionBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 50)
+        expressionBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 60)
         expressionBar.layer.cornerRadius=10
         expressionBar.layer.borderWidth=1
         expressionBar.layer.borderColor=UIColor.darkGray.cgColor
@@ -109,7 +106,8 @@ class MainViewController: UIViewController, UITextViewDelegate {
         expressionBar.textAlignment = .center
         expressionBar.text = ""
         expressionBar.delegate = self
-        
+        expressionBar.font = UIFont(name: "NameOfTheFont", size: 20)
+
 //        expressionBar.isHidden = false
         
         self.view.addSubview(expressionBar)
@@ -282,7 +280,7 @@ class MainViewController: UIViewController, UITextViewDelegate {
     @objc func screenEdgeSwipedRight(_ recognizer: UIScreenEdgePanGestureRecognizer) {
 //        print("Screenedge-swipe right Detected")
         if recognizer.state == .recognized {
-            pickerLauncher.showPicker(own_view: view)
+            main_menu.showPicker(own_view: view)
         }
     }
     

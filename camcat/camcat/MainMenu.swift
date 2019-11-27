@@ -11,7 +11,7 @@
 import Foundation
 import UIKit
 
-class PickerLauncher: NSObject{
+class MainMenu: NSObject{
     
     var main_view = UIView()
     let blackView = UIView()

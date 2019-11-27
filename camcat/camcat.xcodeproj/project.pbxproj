@@ -15,7 +15,8 @@
 		86A9A8AE23692BB700852476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86A9A8AD23692BB700852476 /* Assets.xcassets */; };
 		86A9A8B123692BB700852476 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86A9A8AF23692BB700852476 /* LaunchScreen.storyboard */; };
 		DC0D143D236F8614007A5020 /* BackEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0D143C236F8614007A5020 /* BackEnd.swift */; };
-		DC9B4C0A238CEF700050A9D2 /* PickerLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9B4C09238CEF700050A9D2 /* PickerLauncher.swift */; };
+		DC9B4C0A238CEF700050A9D2 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9B4C09238CEF700050A9D2 /* MainMenu.swift */; };
+		DCF3F1C0238E3EE1004CE2FA /* ExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF3F1BF238E3EE1004CE2FA /* ExpressionEvaluator.m */; };
 		F8095581236D070C00C01407 /* no_img_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = F8095580236D070C00C01407 /* no_img_indicator.png */; };
 		F8095583236D1FAF00C01407 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8095582236D1FAF00C01407 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
@@ -31,7 +32,10 @@
 		86A9A8B023692BB700852476 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86A9A8B223692BB700852476 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC0D143C236F8614007A5020 /* BackEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEnd.swift; sourceTree = "<group>"; };
-		DC9B4C09238CEF700050A9D2 /* PickerLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerLauncher.swift; sourceTree = "<group>"; };
+		DC9B4C09238CEF700050A9D2 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		DCF3F1BE238E3EE1004CE2FA /* camcat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "camcat-Bridging-Header.h"; sourceTree = "<group>"; };
+		DCF3F1BF238E3EE1004CE2FA /* ExpressionEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExpressionEvaluator.m; sourceTree = "<group>"; };
+		DCF3F1C1238E3F36004CE2FA /* ExpressionEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpressionEvaluator.h; sourceTree = "<group>"; };
 		F8095580236D070C00C01407 /* no_img_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_img_indicator.png; sourceTree = "<group>"; };
 		F8095582236D1FAF00C01407 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,7 +81,10 @@
 				86A9A8B223692BB700852476 /* Info.plist */,
 				F8095582236D1FAF00C01407 /* MainViewController.swift */,
 				DC0D143C236F8614007A5020 /* BackEnd.swift */,
-				DC9B4C09238CEF700050A9D2 /* PickerLauncher.swift */,
+				DCF3F1BF238E3EE1004CE2FA /* ExpressionEvaluator.m */,
+				DCF3F1C1238E3F36004CE2FA /* ExpressionEvaluator.h */,
+				DC9B4C09238CEF700050A9D2 /* MainMenu.swift */,
+				DCF3F1BE238E3EE1004CE2FA /* camcat-Bridging-Header.h */,
 			);
 			path = camcat;
 			sourceTree = "<group>";
@@ -114,6 +121,7 @@
 				TargetAttributes = {
 					86A9A8A023692BB600852476 = {
 						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -155,12 +163,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCF3F1C0238E3EE1004CE2FA /* ExpressionEvaluator.m in Sources */,
 				DC0D143D236F8614007A5020 /* BackEnd.swift in Sources */,
 				86A9A8A923692BB600852476 /* PickerViewController.swift in Sources */,
 				86A9A8A523692BB600852476 /* AppDelegate.swift in Sources */,
 				86A9A8A723692BB600852476 /* SceneDelegate.swift in Sources */,
 				F8095583236D1FAF00C01407 /* MainViewController.swift in Sources */,
-				DC9B4C0A238CEF700050A9D2 /* PickerLauncher.swift in Sources */,
+				DC9B4C0A238CEF700050A9D2 /* MainMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,15 +313,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5XN2U29MG;
+				DEVELOPMENT_TEAM = ZRBQP3R27R;
 				INFOPLIST_FILE = camcat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = camcat.new;
+				PRODUCT_BUNDLE_IDENTIFIER = "Assignment2.Disappearing-Unicorns";
 				PRODUCT_NAME = CamCat;
+				SWIFT_OBJC_BRIDGING_HEADER = "camcat/camcat-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -322,6 +334,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W5XN2U29MG;
 				INFOPLIST_FILE = camcat/Info.plist;
@@ -331,6 +344,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = blocks.camcat;
 				PRODUCT_NAME = CamCat;
+				SWIFT_OBJC_BRIDGING_HEADER = "camcat/camcat-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
