@@ -13,7 +13,7 @@ class MainViewController: UIViewController {
     var imgData:UIImage!
     var imgView:UIImageView!
     
-    var expressionBar:UITextField!
+    //var expressionBar:UITextView!
     var operatorBarItem:[UIButton]! //Order: 0.Plus, 1.Minus, 2.Multiply, 3.Divide, 4.Undo
     var addButton:UIButton!
     var subButton:UIButton!
@@ -24,7 +24,13 @@ class MainViewController: UIViewController {
     var resultLabel:UILabel!
 //    var num_stack: UIScrollView!
     var backGround:UILabel!
-        
+     
+    // Add a new textField
+//    var extendText:UISwitch!
+//    var expressionExtendBar:UITextField!
+    
+    let expressionBar = UITextView()
+    
     var backend = BackEnd()
     var pickerLauncher = PickerLauncher()
     
@@ -32,29 +38,44 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         prepareView()
         prepareGestureRecog()
+//        drawSwitch()
         
         backend.read()
         imgView.image = drawRectangleOnImage(image: imgData)
 //        create_num_stack()
+        
     }
     
     func prepareView(){
         let pickedImage = PickedImage.instance.get()
         imgData = pickedImage.data
         drawImageView()
-        
         drawOperatorBar()
         drawExpressionBar()
     }
     
-
+//    func drawSwitch(){
+//        extendText = UISwitch(frame:CGRect(x: 300, y: 150, width: 0, height: 0))
+//        extendText.addTarget(self, action: #selector(MainViewController.switchStateChange(_:)), for: .valueChanged)
+//        extendText.setOn(false, animated: false)
+//        self.view.addSubview(extendText)
+//    }
+    
+//    @objc func switchStateChange(_ sender: UISwitch) {
+//        if (sender.isOn == true) {
+//            expressionBar.isHidden = true
+//            expressionExtendBar.isHidden = false
+//        } else {
+//            expressionBar.isHidden = false
+//            expressionExtendBar.isHidden = true
+//        }
+//    }
     
     func drawImageView(){
         imgView = UIImageView(image: imgData)
         imgView.contentMode = UIView.ContentMode.scaleAspectFit
         imgView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 200)
         view.addSubview(imgView)
-
     }
     
     func drawOperatorBar(){
@@ -102,16 +123,47 @@ class MainViewController: UIViewController {
         equalSign.backgroundColor = .systemBackground
         self.view.addSubview(equalSign)
 
-        expressionBar = UITextField(frame: CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 30))
+        expressionBar.frame = CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 30)
         expressionBar.keyboardType = UIKeyboardType.decimalPad
         expressionBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 50)
         expressionBar.layer.cornerRadius=10
         expressionBar.layer.borderWidth=1
         expressionBar.layer.borderColor=UIColor.darkGray.cgColor
-        expressionBar.backgroundColor = .systemBackground
+        expressionBar.backgroundColor = .yellow
         expressionBar.textAlignment = .center
         expressionBar.text = ""
+        
+//        expressionBar.isHidden = false
+        
         self.view.addSubview(expressionBar)
+        
+        
+        
+//        textView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 80)
+//        textView.keyboardType = UIKeyboardType.decimalPad
+//        textView.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 50)
+//        textView.layer.cornerRadius=10
+//        expressionBar.layer.borderWidth=1
+//        expressionBar.layer.borderColor=UIColor.darkGray.cgColor
+//        expressionBar.backgroundColor = .yellow
+//        expressionBar.textAlignment = .center
+//        expressionBar.text = ""
+//        self.view.addSubview(textView)
+        
+//        expressionExtendBar = UITextField(frame: CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 80))
+//        expressionExtendBar.keyboardType = UIKeyboardType.decimalPad
+//        expressionExtendBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 50+25)
+//        expressionExtendBar.layer.cornerRadius=10
+//        expressionExtendBar.layer.borderWidth=1
+//        expressionExtendBar.layer.borderColor=UIColor.darkGray.cgColor
+//        expressionExtendBar.backgroundColor = .systemBackground
+//        expressionExtendBar.textAlignment = .center
+//        expressionExtendBar.text = ""
+//
+//        expressionExtendBar.isHidden = true
+//
+//        self.view.addSubview(expressionExtendBar)
+        
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 30))
         doneToolbar.barStyle = .default
 
@@ -125,7 +177,7 @@ class MainViewController: UIViewController {
         doneToolbar.sizeToFit()
 
         expressionBar.inputAccessoryView = doneToolbar
-        
+//        expressionExtendBar.inputAccessoryView = doneToolbar
         
         resultLabel = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-60), y: 35, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-30)), height: 30))
         resultLabel.text = "0"
@@ -141,12 +193,17 @@ class MainViewController: UIViewController {
         expressionBar.resignFirstResponder()
         expressionBar.text!.append(" ")
         backend.calculation(expressionBar.text!)
+//        expressionExtendBar.resignFirstResponder()
+//        expressionExtendBar.text!.append(" ")
+//        backend.calculation(expressionExtendBar.text!)
         updateResult()
     }
     
     @objc func bracket(sender: UIBarButtonItem){
         expressionBar.text?.append(sender.title! + " ")
         backend.calculation(expressionBar.text!)
+//        expressionExtendBar.text?.append(sender.title! + " ")
+//        backend.calculation(expressionExtendBar.text!)
         updateResult()
     }
     
@@ -204,6 +261,8 @@ class MainViewController: UIViewController {
             backend.deal_with_box()
             expressionBar.text = backend.chcek_box(pts: point, equation: expressionBar.text!)
             backend.calculation(expressionBar.text!)
+//            expressionExtendBar.text = backend.chcek_box(pts: point, equation: expressionExtendBar.text!)
+//            backend.calculation(expressionExtendBar.text!)
             updateResult()
         }
     }
@@ -311,19 +370,30 @@ class MainViewController: UIViewController {
     @objc func signButtonAction(sender: UIButton!) {
         expressionBar.text?.append(sender.titleLabel!.text! + " ")
         backend.calculation(expressionBar.text!)
+//        expressionExtendBar.text?.append(sender.titleLabel!.text! + " ")
+//        backend.calculation(expressionExtendBar.text!)
         updateResult()
     }
     
     @objc func undoButtonAction(sender: UIButton!) {
-        var text = expressionBar.text?.split(separator: " ")
-        if text!.count >= 1 {
-            text?.removeLast()
-            var full_text = text?.joined(separator: " ")
-            full_text?.append(" ")
-            expressionBar.text = full_text
+        var text1 = expressionBar.text?.split(separator: " ")
+        if text1!.count >= 1 {
+            text1?.removeLast()
+            var full_text1 = text1?.joined(separator: " ")
+            full_text1?.append(" ")
+            expressionBar.text = full_text1
             backend.calculation(expressionBar.text!)
             updateResult()
         }
+//        var text2 = expressionExtendBar.text?.split(separator: " ")
+//        if text2!.count >= 1 {
+//            text2?.removeLast()
+//            var full_text2 = text2?.joined(separator: " ")
+//            full_text2?.append(" ")
+//            expressionExtendBar.text = full_text2
+//            backend.calculation(expressionExtendBar.text!)
+//            updateResult()
+//        }
     }
     //---End Num Button Action---
     
