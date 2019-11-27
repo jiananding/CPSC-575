@@ -13,7 +13,6 @@
 		DC760B7C23835CB0009EB3B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC760B7A23835CB0009EB3B3 /* Main.storyboard */; };
 		DC760B7E23835CB1009EB3B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC760B7D23835CB1009EB3B3 /* Assets.xcassets */; };
 		DC760B8123835CB1009EB3B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC760B7F23835CB1009EB3B3 /* LaunchScreen.storyboard */; };
-		DCF6B4EC2389DA95000259BD /* PickerLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF6B4EB2389DA95000259BD /* PickerLauncher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		DC760B7D23835CB1009EB3B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC760B8023835CB1009EB3B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC760B8223835CB1009EB3B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DCF6B4EB2389DA95000259BD /* PickerLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerLauncher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +59,6 @@
 				DC760B7423835CB0009EB3B3 /* AppDelegate.swift */,
 				DC760B7623835CB0009EB3B3 /* SceneDelegate.swift */,
 				DC760B7823835CB0009EB3B3 /* ViewController.swift */,
-				DCF6B4EB2389DA95000259BD /* PickerLauncher.swift */,
 				DC760B7A23835CB0009EB3B3 /* Main.storyboard */,
 				DC760B7D23835CB1009EB3B3 /* Assets.xcassets */,
 				DC760B7F23835CB1009EB3B3 /* LaunchScreen.storyboard */,
@@ -144,7 +141,6 @@
 				DC760B7923835CB0009EB3B3 /* ViewController.swift in Sources */,
 				DC760B7523835CB0009EB3B3 /* AppDelegate.swift in Sources */,
 				DC760B7723835CB0009EB3B3 /* SceneDelegate.swift in Sources */,
-				DCF6B4EC2389DA95000259BD /* PickerLauncher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
