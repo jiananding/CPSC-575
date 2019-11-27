@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UITextViewDelegate {
     
     var imgData:UIImage!
     var imgView:UIImageView!
@@ -105,9 +105,10 @@ class MainViewController: UIViewController {
         expressionBar.layer.cornerRadius=10
         expressionBar.layer.borderWidth=1
         expressionBar.layer.borderColor=UIColor.darkGray.cgColor
-        expressionBar.backgroundColor = .yellow
+        expressionBar.backgroundColor = .systemBackground
         expressionBar.textAlignment = .center
         expressionBar.text = ""
+        expressionBar.delegate = self
         
 //        expressionBar.isHidden = false
         
@@ -153,8 +154,8 @@ class MainViewController: UIViewController {
         doneToolbar.sizeToFit()
 
         expressionBar.inputAccessoryView = doneToolbar
-        expressionBar.addTarget(self, action: #selector(self.floatOperationBar), for: .editingDidBegin)
-        expressionBar.addTarget(self, action: #selector(self.updateExpressionBar), for: .editingChanged)
+//        expressionBar.addTarget(self, action: #selector(self.floatOperationBar), for: .editingDidBegin)
+//        expressionBar.addTarget(self, action: #selector(self.updateExpressionBar), for: .editingChanged)
         
         resultLabel = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-60), y: 35, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-30)), height: 30))
         resultLabel.text = "0"
@@ -166,7 +167,8 @@ class MainViewController: UIViewController {
         resultLabel.text = backend.result
     }
     
-    @objc func updateExpressionBar(){
+//    @objc func updateExpressionBar(){
+    func textViewDidChange(_ textView: UITextView) {
         backend.calculation(expressionBar.text!)
         updateResult()
     }
@@ -200,7 +202,8 @@ class MainViewController: UIViewController {
         updateResult()
     }
     
-    @objc func floatOperationBar(){
+//    @objc func floatOperationBar(){
+    func textViewDidBeginEditing(_ textView: UITextView) {
         addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
@@ -351,7 +354,7 @@ class MainViewController: UIViewController {
         var text = expressionBar.text?.split(separator: " ")
         if text!.count >= 1 {
             text?.removeLast()
-            var full_text1 = text?.joined(separator: " ")
+            var full_text = text?.joined(separator: " ")
             full_text?.append(" ")
             expressionBar.text = full_text
             backend.calculation(expressionBar.text!)
