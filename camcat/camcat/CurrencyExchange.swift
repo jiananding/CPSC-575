@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class Currency_exchange: UIViewController, UITableViewDataSource, UITableViewDelegate{
     var base_button = UIButton()
     var target_button = UIButton()
     

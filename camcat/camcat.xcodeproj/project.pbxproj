@@ -15,6 +15,7 @@
 		86A9A8AE23692BB700852476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86A9A8AD23692BB700852476 /* Assets.xcassets */; };
 		86A9A8B123692BB700852476 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86A9A8AF23692BB700852476 /* LaunchScreen.storyboard */; };
 		DC0D143D236F8614007A5020 /* BackEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0D143C236F8614007A5020 /* BackEnd.swift */; };
+		DC0DF2C0238E497600F4CF71 /* CurrencyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0DF2BF238E497600F4CF71 /* CurrencyExchange.swift */; };
 		DC9B4C0A238CEF700050A9D2 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9B4C09238CEF700050A9D2 /* MainMenu.swift */; };
 		DCF3F1C0238E3EE1004CE2FA /* ExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF3F1BF238E3EE1004CE2FA /* ExpressionEvaluator.m */; };
 		F8095581236D070C00C01407 /* no_img_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = F8095580236D070C00C01407 /* no_img_indicator.png */; };
@@ -32,6 +33,7 @@
 		86A9A8B023692BB700852476 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86A9A8B223692BB700852476 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC0D143C236F8614007A5020 /* BackEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEnd.swift; sourceTree = "<group>"; };
+		DC0DF2BF238E497600F4CF71 /* CurrencyExchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExchange.swift; sourceTree = "<group>"; };
 		DC9B4C09238CEF700050A9D2 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		DCF3F1BE238E3EE1004CE2FA /* camcat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "camcat-Bridging-Header.h"; sourceTree = "<group>"; };
 		DCF3F1BF238E3EE1004CE2FA /* ExpressionEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExpressionEvaluator.m; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				DCF3F1BF238E3EE1004CE2FA /* ExpressionEvaluator.m */,
 				DCF3F1C1238E3F36004CE2FA /* ExpressionEvaluator.h */,
 				DCF3F1BE238E3EE1004CE2FA /* camcat-Bridging-Header.h */,
+				DC0DF2BF238E497600F4CF71 /* CurrencyExchange.swift */,
 			);
 			path = camcat;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 				86A9A8A723692BB600852476 /* SceneDelegate.swift in Sources */,
 				F8095583236D1FAF00C01407 /* MainViewController.swift in Sources */,
 				DC9B4C0A238CEF700050A9D2 /* MainMenu.swift in Sources */,
+				DC0DF2C0238E497600F4CF71 /* CurrencyExchange.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
