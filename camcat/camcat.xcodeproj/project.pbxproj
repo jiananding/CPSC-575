@@ -81,9 +81,9 @@
 				86A9A8B223692BB700852476 /* Info.plist */,
 				F8095582236D1FAF00C01407 /* MainViewController.swift */,
 				DC0D143C236F8614007A5020 /* BackEnd.swift */,
+				DC9B4C09238CEF700050A9D2 /* MainMenu.swift */,
 				DCF3F1BF238E3EE1004CE2FA /* ExpressionEvaluator.m */,
 				DCF3F1C1238E3F36004CE2FA /* ExpressionEvaluator.h */,
-				DC9B4C09238CEF700050A9D2 /* MainMenu.swift */,
 				DCF3F1BE238E3EE1004CE2FA /* camcat-Bridging-Header.h */,
 			);
 			path = camcat;
