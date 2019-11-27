@@ -22,7 +22,7 @@ class BackEnd {
     var result: String = ""
         
     let pickedImage = PickedImage.instance.get().data
-    
+   
     func read() {
         let requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!, options: [:])
               
@@ -78,7 +78,7 @@ class BackEnd {
     
     // Change the "÷" and "x" into "/" and the "*"
     func changeExpression(_ equation: String) -> String {
-        var arr = equation.split(separator: " ")
+        var arr = equation.map{String($0)}
         let le = arr.count
         for i in 0..<le {
             if (arr[i] == "÷") {
@@ -88,13 +88,14 @@ class BackEnd {
                 arr[i] = "*"
             }
         }
-        let equ = arr.joined(separator: " ")
+        let equ = arr.joined()
         return equ
     }
     
     // Check the equation is right or not
     func checkRight(_ expression: String) -> Bool {
-        if let result = ExpressionEvaluator.getValue(expression){
+        let expressionC = changeExpression(expression)
+        if let result = ExpressionEvaluator.getValue(expressionC){
             return true
         }else{
             return false
