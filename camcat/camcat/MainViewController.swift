@@ -260,11 +260,15 @@ class MainViewController: UIViewController, UITextViewDelegate {
 //            print("You are tapping \(getTappedPointOnImg(tappedPoint: sender.location(in: self.view)))")
             var point: CGPoint = sender.location(in: self.view)
             point = getTappedPointOnImg(tappedPoint: point)
-            backend.deal_with_box()
-            expressionBar.text = backend.chcek_box(pts: point, equation: expressionBar.text!)
+
+            let cursorPosition = expressionBar.offset(from: expressionBar.beginningOfDocument, to: expressionBar.selectedTextRange!.start)
+            let num = backend.check_box(pts: point)
+            var text = expressionBar.text!.map{String($0)}
+            
+            text.insert(num, at: cursorPosition)
+            
+            expressionBar.text! = text.joined()
             backend.calculation(expressionBar.text!)
-//            expressionExtendBar.text = backend.chcek_box(pts: point, equation: expressionExtendBar.text!)
-//            backend.calculation(expressionExtendBar.text!)
             updateResult()
         }
     }

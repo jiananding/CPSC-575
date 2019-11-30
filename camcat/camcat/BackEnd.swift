@@ -112,19 +112,17 @@ class BackEnd {
         }
     }
     
-    func chcek_box(pts: CGPoint, equation: String) -> String{
+    func check_box(pts: CGPoint) -> String{
         if real_box_position.isEmpty {
             deal_with_box()
         }
-        var result = equation
 
         for box in real_box_position {
             if box.position.contains(pts) {
-                result.append("\(box.nums[0])")
-                return result
+                return String(format: "%.2f", box.nums[0])
             }
         }
-        return result
+        return ""
     }
     
     
