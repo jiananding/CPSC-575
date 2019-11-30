@@ -20,17 +20,18 @@ class BackEnd {
     var real_box_position: [Box] = []
     var value: [Double] = []
     var result: String = ""
+    var mode: String = "plus"
         
-    //let pickedImage = PickedImage.instance.get().data
-    let image = UIImage(named: "download")
+    let pickedImage = PickedImage.instance.get().data
+    //let image = UIImage(named: "download")
    
     func read() {
         var requestHandler: VNImageRequestHandler
         print(PickedImage.camera)
         if PickedImage.camera {
-            requestHandler = VNImageRequestHandler(data: image!.pngData()!, orientation: .right ,options: [:])
+            requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!, orientation: .right ,options: [:])
         } else {
-            requestHandler = VNImageRequestHandler(data: image!.pngData()!,options: [:])
+            requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!,options: [:])
         }
               
         let request = VNRecognizeTextRequest { (request, error) in
@@ -52,8 +53,10 @@ class BackEnd {
                         arr.append(k)
                     }
                 }
-                let temp_box = Box(position: visionReasult.boundingBox, nums: arr)
-                self.box_position.append(temp_box)
+                if (!arr.isEmpty) {
+                    let temp_box = Box(position: visionReasult.boundingBox, nums: arr)
+                    self.box_position.append(temp_box)
+                }
             }
         }
         request.recognitionLevel = .accurate
@@ -116,7 +119,7 @@ class BackEnd {
         var result = equation
 
         for box in real_box_position {
-            if box.position.contains(pts) && !box.nums.isEmpty {
+            if box.position.contains(pts) {
                 result.append("\(box.nums[0])")
                 return result
             }
