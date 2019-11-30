@@ -78,7 +78,7 @@ class BackEnd {
             let expression_result = expression.expressionValue(with: nil, context: nil) as! NSNumber
             result = expression_result.stringValue
         } else {
-            result = "Error"
+            result = "?"
         }
     }
     
