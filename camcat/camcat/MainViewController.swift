@@ -22,8 +22,8 @@ class MainViewController: UIViewController, UITextViewDelegate {
     var undoButton:UIButton!
     var equalSign:UILabel!
     var resultLabel:UILabel!
-    
-    let expressionBar = UITextView()
+    var expressionBar:UITextField!
+    //let expressionBar = UITextView()
     
     var backend = BackEnd()
     var main_menu = MainMenu()
@@ -91,12 +91,12 @@ class MainViewController: UIViewController, UITextViewDelegate {
     }
     
     func drawExpressionBar(){
-        equalSign = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-100), y: 35, width: 40, height: 30))
+        equalSign = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-90), y: 44, width: 40, height: 30))
         equalSign.text = "     ="
         equalSign.backgroundColor = .systemBackground
         self.view.addSubview(equalSign)
 
-        expressionBar.frame = CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 50)
+        expressionBar = UITextField(frame: CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 30))
         expressionBar.keyboardType = UIKeyboardType.decimalPad
         expressionBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 60)
         expressionBar.layer.cornerRadius=10
@@ -105,7 +105,7 @@ class MainViewController: UIViewController, UITextViewDelegate {
         expressionBar.backgroundColor = .systemBackground
         expressionBar.textAlignment = .center
         expressionBar.text = ""
-        expressionBar.delegate = self
+        //expressionBar.delegate = self
         expressionBar.font = UIFont(name: "NameOfTheFont", size: 20)
 
 //        expressionBar.isHidden = false
@@ -155,7 +155,7 @@ class MainViewController: UIViewController, UITextViewDelegate {
 //        expressionBar.addTarget(self, action: #selector(self.floatOperationBar), for: .editingDidBegin)
 //        expressionBar.addTarget(self, action: #selector(self.updateExpressionBar), for: .editingChanged)
         
-        resultLabel = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-60), y: 35, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-30)), height: 30))
+        resultLabel = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-50), y: 44, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-30)), height: 30))
         resultLabel.text = "0"
         resultLabel.backgroundColor = .systemBackground
         self.view.addSubview(resultLabel)

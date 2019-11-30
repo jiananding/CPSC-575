@@ -21,15 +21,16 @@ class BackEnd {
     var value: [Double] = []
     var result: String = ""
         
-    let pickedImage = PickedImage.instance.get().data
+    //let pickedImage = PickedImage.instance.get().data
+    let image = UIImage(named: "download")
    
     func read() {
         var requestHandler: VNImageRequestHandler
         print(PickedImage.camera)
         if PickedImage.camera {
-            requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!, orientation: .right ,options: [:])
+            requestHandler = VNImageRequestHandler(data: image!.pngData()!, orientation: .right ,options: [:])
         } else {
-            requestHandler = VNImageRequestHandler(data: pickedImage!.pngData()!,options: [:])
+            requestHandler = VNImageRequestHandler(data: image!.pngData()!,options: [:])
         }
               
         let request = VNRecognizeTextRequest { (request, error) in
