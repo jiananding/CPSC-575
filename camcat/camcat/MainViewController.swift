@@ -260,19 +260,19 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             
             if (backend.check_box(pts: point) != "") {
                 if (expressionBar.isEditing) {
-                    let cursorPosition = expressionBar.offset(from: expressionBar.beginningOfDocument, to: expressionBar.selectedTextRange!.start)
-                    let text = expressionBar.text!
-                    let index = expressionBar.text!.index(expressionBar.text!.startIndex, offsetBy: cursorPosition-1)
                     if (!expressionBar.text!.isEmpty) {
+                        let cursorPosition = expressionBar.offset(from: expressionBar.beginningOfDocument, to: expressionBar.selectedTextRange!.start)
+                        let text = expressionBar.text!
+                        let index = expressionBar.text!.index(expressionBar.text!.startIndex, offsetBy: cursorPosition-1)
                         if (text[index] != "(") {
                             expressionBar.insertText(backend.mode)
                         }
                     }
                     expressionBar.insertText(backend.check_box(pts: point))
                 } else {
-                    let temp_text = expressionBar.text!
-                    let index = expressionBar.text!.index(before: temp_text.endIndex)
                     if (!expressionBar.text!.isEmpty) {
+                        let temp_text = expressionBar.text!
+                        let index = expressionBar.text!.index(before: temp_text.endIndex)
                         if (temp_text[index] != "(") {
                             var text = expressionBar.text!.map{String($0)}
                             text.insert(backend.mode, at: expressionBar.text!.count)
