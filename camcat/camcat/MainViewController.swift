@@ -390,14 +390,16 @@ class MainViewController: UIViewController, UITextFieldDelegate {
                 }
                 text?.removeLast()
             }
-            if (!text!.isEmpty) {
+            if (!text!.isEmpty && text!.last! != "(") {
+                text?.removeLast()
+            }
+            if (text! == expressionBar.text! && text!.last! == "(") {
                 text?.removeLast()
             }
             expressionBar.text = text
             backend.calculation(expressionBar.text!)
             updateResult()
         }
-
     }
     //---End Num Button Action---
     
