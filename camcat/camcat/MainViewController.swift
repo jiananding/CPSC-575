@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITextViewDelegate {
+class MainViewController: UIViewController, UITextFieldDelegate {
     
     var imgData:UIImage!
     var imgView:UIImageView!
@@ -27,6 +27,7 @@ class MainViewController: UIViewController, UITextViewDelegate {
     
     var backend = BackEnd()
     var main_menu = MainMenu()
+    var last_length = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,8 +113,6 @@ class MainViewController: UIViewController, UITextViewDelegate {
         
         self.view.addSubview(expressionBar)
         
-        
-        
 //        textView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 80)
 //        textView.keyboardType = UIKeyboardType.decimalPad
 //        textView.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 50)
@@ -144,16 +143,16 @@ class MainViewController: UIViewController, UITextViewDelegate {
 
         let emptySpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
-        let leftBracket: UIBarButtonItem = UIBarButtonItem(title: "(", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.leftBracket))
-        let rightBracket: UIBarButtonItem = UIBarButtonItem(title: ")", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.rightBracket))
+        let leftBracket: UIBarButtonItem = UIBarButtonItem(title: "(", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.signButtonAction))
+        let rightBracket: UIBarButtonItem = UIBarButtonItem(title: ")", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.signButtonAction))
         
         let items = [emptySpace, leftBracket, emptySpace, rightBracket, emptySpace, done]
         doneToolbar.items = items
         doneToolbar.sizeToFit()
 
         expressionBar.inputAccessoryView = doneToolbar
-//        expressionBar.addTarget(self, action: #selector(self.floatOperationBar), for: .editingDidBegin)
-//        expressionBar.addTarget(self, action: #selector(self.updateExpressionBar), for: .editingChanged)
+        expressionBar.addTarget(self, action: #selector(self.floatOperationBar), for: .editingDidBegin)
+        expressionBar.addTarget(self, action: #selector(self.updateExpressionBar), for: .editingChanged)
         
         resultLabel = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-50), y: 44, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-30)), height: 30))
         resultLabel.text = "0"
@@ -165,8 +164,8 @@ class MainViewController: UIViewController, UITextViewDelegate {
         resultLabel.text = backend.result
     }
     
-//    @objc func updateExpressionBar(){
-    func textViewDidChange(_ textView: UITextView) {
+    @objc func updateExpressionBar(){
+    //func textViewDidChange(_ textView: UITextView) {
         backend.calculation(expressionBar.text!)
         updateResult()
     }
@@ -186,22 +185,22 @@ class MainViewController: UIViewController, UITextViewDelegate {
         undoButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
     }
     
-    @objc func leftBracket(sender: UIBarButtonItem){
-        expressionBar.text?.append(sender.title! + " ")
-        backend.calculation(expressionBar.text!)
-//        expressionExtendBar.text?.append(sender.title! + " ")
-//        backend.calculation(expressionExtendBar.text!)
-        updateResult()
-    }
+//    @objc func leftBracket(sender: UIBarButtonItem){
+//        expressionBar.text?.append(sender.title! + " ")
+//        backend.calculation(expressionBar.text!)
+////        expressionExtendBar.text?.append(sender.title! + " ")
+////        backend.calculation(expressionExtendBar.text!)
+//        updateResult()
+//    }
+//
+//    @objc func rightBracket(sender: UIBarButtonItem){
+//        expressionBar.text?.append(" " + sender.title!)
+//        backend.calculation(expressionBar.text!)
+//        updateResult()
+//    }
     
-    @objc func rightBracket(sender: UIBarButtonItem){
-        expressionBar.text?.append(" " + sender.title!)
-        backend.calculation(expressionBar.text!)
-        updateResult()
-    }
-    
-//    @objc func floatOperationBar(){
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    @objc func floatOperationBar(){
+    //func textViewDidBeginEditing(_ textView: UITextView) {
         addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
@@ -261,13 +260,15 @@ class MainViewController: UIViewController, UITextViewDelegate {
             var point: CGPoint = sender.location(in: self.view)
             point = getTappedPointOnImg(tappedPoint: point)
 
-            let cursorPosition = expressionBar.offset(from: expressionBar.beginningOfDocument, to: expressionBar.selectedTextRange!.start)
-            let num = backend.check_box(pts: point)
-            var text = expressionBar.text!.map{String($0)}
+            last_length = expressionBar.text!.count
             
-            text.insert(num, at: cursorPosition)
-            
-            expressionBar.text! = text.joined()
+            if (expressionBar.isEditing) {
+                expressionBar.insertText(backend.check_box(pts: point))
+            } else {
+                var text = expressionBar.text!.map{String($0)}
+                text.insert(backend.check_box(pts: point), at: expressionBar.text!.count)
+                expressionBar.text! = text.joined()
+            }
             backend.calculation(expressionBar.text!)
             updateResult()
         }
@@ -346,22 +347,30 @@ class MainViewController: UIViewController, UITextViewDelegate {
     //---End of Draw Function---
     
     @objc func signButtonAction(sender: UIButton!) {
-        expressionBar.text?.append(" " + sender.titleLabel!.text! + " ")
-        backend.calculation(expressionBar.text!)
-//        expressionExtendBar.text?.append(sender.titleLabel!.text! + " ")
-//        backend.calculation(expressionExtendBar.text!)
-        updateResult()
+        last_length = expressionBar.text!.count
+
+        if (expressionBar.isEditing) {
+            expressionBar.insertText(sender.titleLabel!.text!)
+        } else {
+            var text = expressionBar.text!.map{String($0)}
+            text.insert(sender.titleLabel!.text!, at: expressionBar.text!.count)
+            expressionBar.text! = text.joined()
+        }
+//        backend.calculation(expressionBar.text!)
     }
     
     @objc func undoButtonAction(sender: UIButton!) {
-        var text = expressionBar.text?.split(separator: " ")
-        if text!.count >= 1 {
-            text?.removeLast()
-            var full_text = text?.joined(separator: " ")
-            full_text?.append(" ")
-            expressionBar.text = full_text
-            backend.calculation(expressionBar.text!)
-            updateResult()
+//        var text = expressionBar.text?.split(separator: " ")
+//        if text!.count >= 1 {
+//            text?.removeLast()
+//            var full_text = text?.joined(separator: " ")
+//            full_text?.append(" ")
+//            expressionBar.text = full_text
+//            backend.calculation(expressionBar.text!)
+//            updateResult()
+//        }
+        for i in 0 ..< (expressionBar.text!.count - last_length) {
+            expressionBar.text?.removeLast()
         }
     }
     //---End Num Button Action---
