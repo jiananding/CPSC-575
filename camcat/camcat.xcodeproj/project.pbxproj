@@ -325,7 +325,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Assignment2.Disappearing-Unicorns";
+				PRODUCT_BUNDLE_IDENTIFIER = Assignment2.sa;
 				PRODUCT_NAME = CamCat;
 				SWIFT_OBJC_BRIDGING_HEADER = "camcat/camcat-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

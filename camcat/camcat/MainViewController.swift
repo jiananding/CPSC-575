@@ -27,7 +27,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     
     var backend = BackEnd()
     var main_menu = MainMenu()
-    var last_length = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +76,8 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         undoButton = getOperator(title: "←", x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         undoButton.addTarget(self, action: #selector(undoButtonAction(sender:)), for: .touchDown)
         view.addSubview(undoButton)
+        
+        checkMode()
     }
     
     func getOperator(title:String, x:CGFloat, y:CGFloat, width:CGFloat, height:CGFloat) -> UIButton{
@@ -259,15 +260,23 @@ class MainViewController: UIViewController, UITextFieldDelegate {
 //            print("You are tapping \(getTappedPointOnImg(tappedPoint: sender.location(in: self.view)))")
             var point: CGPoint = sender.location(in: self.view)
             point = getTappedPointOnImg(tappedPoint: point)
-
-            last_length = expressionBar.text!.count
             
-            if (expressionBar.isEditing) {
-                expressionBar.insertText(backend.check_box(pts: point))
-            } else {
-                var text = expressionBar.text!.map{String($0)}
-                text.insert(backend.check_box(pts: point), at: expressionBar.text!.count)
-                expressionBar.text! = text.joined()
+            if (backend.check_box(pts: point) != "") {
+                if (expressionBar.isEditing) {
+                    if (!expressionBar.text!.isEmpty) {
+                        expressionBar.insertText(backend.mode)
+                    }
+                    expressionBar.insertText(backend.check_box(pts: point))
+                } else {
+                    if (!expressionBar.text!.isEmpty) {
+                        var text = expressionBar.text!.map{String($0)}
+                        text.insert(backend.mode, at: expressionBar.text!.count)
+                        expressionBar.text! = text.joined()
+                    }
+                    var text = expressionBar.text!.map{String($0)}
+                    text.insert(backend.check_box(pts: point), at: expressionBar.text!.count)
+                    expressionBar.text! = text.joined()
+                }
             }
             backend.calculation(expressionBar.text!)
             updateResult()
@@ -347,15 +356,22 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     //---End of Draw Function---
     
     @objc func signButtonAction(sender: UIButton!) {
-        last_length = expressionBar.text!.count
+        addButton.backgroundColor = .lightGray
+        subButton.backgroundColor = .lightGray
+        multiButton.backgroundColor = .lightGray
+        divButton.backgroundColor = .lightGray
+        undoButton.backgroundColor = .lightGray
 
-        if (expressionBar.isEditing) {
-            expressionBar.insertText(sender.titleLabel!.text!)
-        } else {
-            var text = expressionBar.text!.map{String($0)}
-            text.insert(sender.titleLabel!.text!, at: expressionBar.text!.count)
-            expressionBar.text! = text.joined()
-        }
+        backend.mode = sender.titleLabel!.text!
+        sender.backgroundColor = .cyan
+        
+//        if (expressionBar.isEditing) {
+//            expressionBar.insertText(sender.titleLabel!.text!)
+//        } else {
+//            var text = expressionBar.text!.map{String($0)}
+//            text.insert(sender.titleLabel!.text!, at: expressionBar.text!.count)
+//            expressionBar.text! = text.joined()
+//        }
 //        backend.calculation(expressionBar.text!)
     }
     
@@ -369,9 +385,24 @@ class MainViewController: UIViewController, UITextFieldDelegate {
 //            backend.calculation(expressionBar.text!)
 //            updateResult()
 //        }
-        for i in 0 ..< (expressionBar.text!.count - last_length) {
-            expressionBar.text?.removeLast()
-        }
+
     }
     //---End Num Button Action---
+    
+    func checkMode() {
+        switch backend.mode {
+        case "+":
+            addButton.backgroundColor = .cyan
+        case "-":
+            addButton.backgroundColor = .cyan
+        case "\u{00D7}":
+            addButton.backgroundColor = .cyan
+        case "÷":
+            addButton.backgroundColor = .cyan
+        case "←":
+            addButton.backgroundColor = .cyan
+        default:
+            return
+        }
+    }
 }

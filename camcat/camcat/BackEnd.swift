@@ -20,7 +20,7 @@ class BackEnd {
     var real_box_position: [Box] = []
     var value: [Double] = []
     var result: String = ""
-    var mode: String = "plus"
+    var mode: String = "+"
         
     let pickedImage = PickedImage.instance.get().data
     //let image = UIImage(named: "download")
@@ -42,7 +42,6 @@ class BackEnd {
                 guard let candidate = visionReasult.topCandidates(maximumCanadiates).first else {
                     continue
                 }
-                //print(candidate.string)
                 
                 var arr: [Double] = []
                 let strArr = candidate.string.split(separator: " ")
@@ -69,7 +68,6 @@ class BackEnd {
     
     // Do the calculation
     func calculation(_ equation: String) {
-        print("doing calculation")
         if equation.isEmpty {
             result = "0"
             return
@@ -124,7 +122,7 @@ class BackEnd {
         }
         return ""
     }
-    
+        
     
     func deal_with_box() {
         let imageSize = PickedImage.instance.get().data?.size
