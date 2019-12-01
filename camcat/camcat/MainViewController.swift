@@ -212,7 +212,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         let pinchMethod = UIPinchGestureRecognizer(target: self, action: #selector(pinchImage(sender:)))    //Zoom in/out
         let panMethod = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender:)))         //Move img with two fingers
         let tapMethod = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))         //Tap to select boxes
-        panMethod.minimumNumberOfTouches = 2       //Two finger! Not one
+        panMethod.minimumNumberOfTouches = 1       //Two finger! Not one
         imgView.addGestureRecognizer(pinchMethod)
         imgView.addGestureRecognizer(panMethod)
         imgView.addGestureRecognizer(tapMethod)
