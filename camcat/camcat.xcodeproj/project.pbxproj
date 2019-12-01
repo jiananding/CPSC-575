@@ -319,14 +319,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QAGB7MBX6V;
+				DEVELOPMENT_TEAM = ZRBQP3R27R;
 				INFOPLIST_FILE = camcat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Assignment367;
+				PRODUCT_BUNDLE_IDENTIFIER = Assignment3.Landmarks;
 				PRODUCT_NAME = CamCat;
 				SWIFT_OBJC_BRIDGING_HEADER = "camcat/camcat-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -341,14 +341,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QAGB7MBX6V;
+				DEVELOPMENT_TEAM = ZRBQP3R27R;
 				INFOPLIST_FILE = camcat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Assignment367;
+				PRODUCT_BUNDLE_IDENTIFIER = Assignment3.Landmarks;
 				PRODUCT_NAME = CamCat;
 				SWIFT_OBJC_BRIDGING_HEADER = "camcat/camcat-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

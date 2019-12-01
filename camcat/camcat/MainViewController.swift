@@ -371,14 +371,10 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         backend.mode = sender.titleLabel!.text!
         sender.backgroundColor = .cyan
         
-//        if (expressionBar.isEditing) {
-//            expressionBar.insertText(sender.titleLabel!.text!)
-//        } else {
-//            var text = expressionBar.text!.map{String($0)}
-//            text.insert(sender.titleLabel!.text!, at: expressionBar.text!.count)
-//            expressionBar.text! = text.joined()
-//        }
-//        backend.calculation(expressionBar.text!)
+        if (expressionBar.isEditing) {
+            expressionBar.insertText(sender.titleLabel!.text!)
+        }
+        backend.calculation(expressionBar.text!)
     }
     
     @objc func undoButtonAction(sender: UIButton!) {
