@@ -144,8 +144,8 @@ class MainViewController: UIViewController, UITextFieldDelegate {
 
         let emptySpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
-        let leftBracket: UIBarButtonItem = UIBarButtonItem(title: "(", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.signButtonAction))
-        let rightBracket: UIBarButtonItem = UIBarButtonItem(title: ")", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.signButtonAction))
+        let leftBracket: UIBarButtonItem = UIBarButtonItem(title: "(", style: UIBarButtonItem.Style.plain, target: self, action: #selector(bracket))
+        let rightBracket: UIBarButtonItem = UIBarButtonItem(title: ")", style: UIBarButtonItem.Style.plain, target: self, action: #selector(bracket))
         
         let items = [emptySpace, leftBracket, emptySpace, rightBracket, emptySpace, done]
         doneToolbar.items = items
@@ -186,14 +186,11 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         undoButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
     }
     
-//    @objc func leftBracket(sender: UIBarButtonItem){
-//        expressionBar.text?.append(sender.title! + " ")
-//        backend.calculation(expressionBar.text!)
-////        expressionExtendBar.text?.append(sender.title! + " ")
-////        backend.calculation(expressionExtendBar.text!)
-//        updateResult()
-//    }
-//
+    @objc func bracket(sender: UIBarButtonItem){
+        expressionBar.insertText(sender.title!)
+        updateResult()
+    }
+
 //    @objc func rightBracket(sender: UIBarButtonItem){
 //        expressionBar.text?.append(" " + sender.title!)
 //        backend.calculation(expressionBar.text!)
@@ -263,8 +260,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             
             if (backend.check_box(pts: point) != "") {
                 if (expressionBar.isEditing) {
+                    let cursorPosition = expressionBar.offset(from: expressionBar.beginningOfDocument, to: expressionBar.selectedTextRange!.start)
                     if (!expressionBar.text!.isEmpty) {
-                        expressionBar.insertText(backend.mode)
+                            expressionBar.insertText(backend.mode)
                     }
                     expressionBar.insertText(backend.check_box(pts: point))
                 } else {
@@ -376,15 +374,21 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func undoButtonAction(sender: UIButton!) {
-//        var text = expressionBar.text?.split(separator: " ")
-//        if text!.count >= 1 {
-//            text?.removeLast()
-//            var full_text = text?.joined(separator: " ")
-//            full_text?.append(" ")
-//            expressionBar.text = full_text
-//            backend.calculation(expressionBar.text!)
-//            updateResult()
-//        }
+        var text = expressionBar.text
+        if !text!.isEmpty {
+            while (!["+", "-", "\u{00D7}", "÷", "(", ")"].contains(text?.last)) {
+                if (text!.isEmpty) {
+                    break
+                }
+                text?.removeLast()
+            }
+            if (!text!.isEmpty) {
+                text?.removeLast()
+            }
+            expressionBar.text = text
+            backend.calculation(expressionBar.text!)
+            updateResult()
+        }
 
     }
     //---End Num Button Action---
