@@ -20,6 +20,11 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     var multiButton:UIButton!
     var divButton:UIButton!
     var undoButton:UIButton!
+    
+    var tipButton:UIButton!
+    var taxButton:UIButton!
+    
+    
     var equalSign:UILabel!
     var resultLabel:UILabel!
     var expressionBar:UITextField!
@@ -78,6 +83,12 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(undoButton)
         
         checkMode()
+        
+        // Add the tip and tax button
+        tipButton = getOperator(title: "tip", x: UIScreen.main.bounds.size.width/5*3 + 10, y: UIScreen.main.bounds.size.height - 50, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-10)), height: 30)
+        tipButton.addTarget(self, action: #selector(tipButtonAction(sender:)), for: .touchDown)
+        view.addSubview(tipButton)
+        
     }
     
     func getOperator(title:String, x:CGFloat, y:CGFloat, width:CGFloat, height:CGFloat) -> UIButton{
@@ -415,4 +426,63 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             return
         }
     }
+    
+    @objc func tipButtonAction(sender: UIButton!) {
+        let text = resultLabel.text!
+        
+        let alert = UIAlertController(title: "Add tip", message: "Please choose how much you want to pay for tips", preferredStyle: UIAlertController.Style.alert)
+        
+        let noTip_Action = UIAlertAction(title: "No Tip", style: UIAlertAction.Style.default)
+        
+        let _10_Action = UIAlertAction(title: "10%", style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
+            var result_10 = Double(text)
+            result_10 = result_10! * 1.1
+            self.showTotalAddingTip(Double(result_10!))
+        })
+        
+        let _15_Action = UIAlertAction(title: "15%", style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
+            var result_15 = Double(text)
+            result_15 = result_15! * 1.15
+            self.showTotalAddingTip(Double(result_15!))
+        })
+        
+        let otherAction = UIAlertAction(title: "Others", style: UIAlertAction.Style.default, handler: {(action: UIAlertAction!) in
+            let result_other = Double(text)
+            self.calculateTip(result_other!)
+        })
+        
+        alert.addAction(noTip_Action)
+        alert.addAction(_10_Action)
+        alert.addAction(_15_Action)
+        alert.addAction(otherAction)
+        alert.preferredAction = noTip_Action
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    // Show the total money (adding tips)
+    func showTotalAddingTip(_ result:Double) {
+        let myResult = String(format: "%.2f", result)
+        let alertResult = UIAlertController(title: "Total", message: "You actually spend " + myResult, preferredStyle: UIAlertController.Style.alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+        alertResult.addAction(okAction)
+        alertResult.preferredAction = okAction
+        self.present(alertResult, animated: true, completion: nil)
+    }
+    
+    // Individual tip
+    func calculateTip(_ result:Double) {
+        let alertResult = UIAlertController(title: "Tip", message: "Enter the percentages", preferredStyle: UIAlertController.Style.alert)
+        alertResult.addTextField()
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action: UIAlertAction!) in
+            let tip = alertResult.textFields![0].text!
+            let resultFinal = result * (1 + Double(tip)! / 100)
+            self.showTotalAddingTip(resultFinal)
+        })
+        alertResult.addAction(okAction)
+        alertResult.preferredAction = okAction
+        self.present(alertResult, animated: true, completion: nil)
+    }
+    
 }
