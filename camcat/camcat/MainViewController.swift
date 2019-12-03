@@ -473,12 +473,14 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     
     // Individual tip
     func calculateTip(_ result:Double) {
-        let alertResult = UIAlertController(title: "Tip", message: "Enter the percentages", preferredStyle: UIAlertController.Style.alert)
+        let alertResult = UIAlertController(title: "Tip", message: "Enter in percentages", preferredStyle: UIAlertController.Style.alert)
         alertResult.addTextField()
         let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action: UIAlertAction!) in
-            let tip = alertResult.textFields![0].text!
-            let resultFinal = result * (1 + Double(tip)! / 100)
-            self.showTotalAddingTip(resultFinal)
+            if (alertResult.textFields![0].text != "") {
+                let tip = alertResult.textFields![0].text!
+                let resultFinal = result * (1 + Double(tip)! / 100)
+                self.showTotalAddingTip(resultFinal)
+            }
         })
         alertResult.addAction(okAction)
         alertResult.preferredAction = okAction
