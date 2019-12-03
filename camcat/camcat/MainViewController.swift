@@ -111,9 +111,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
 
         expressionBar = UITextField(frame: CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 30))
         expressionBar.keyboardType = UIKeyboardType.decimalPad
-        expressionBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 60)
-        expressionBar.layer.cornerRadius=10
-        expressionBar.layer.borderWidth=1
+        expressionBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 59)
+//        expressionBar.layer.cornerRadius=10
+        expressionBar.layer.borderWidth=0
         expressionBar.layer.borderColor=UIColor.darkGray.cgColor
         expressionBar.backgroundColor = .systemBackground
         expressionBar.textAlignment = .center
@@ -474,7 +474,11 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     // Individual tip
     func calculateTip(_ result:Double) {
         let alertResult = UIAlertController(title: "Tip", message: "Enter in percentages", preferredStyle: UIAlertController.Style.alert)
-        alertResult.addTextField()
+        alertResult.addTextField { (textField) -> Void in
+                    textField.keyboardType = UIKeyboardType.numberPad
+                    textField.placeholder = "Tips"
+        //            textField.secureTextEntry = true
+                }
         let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action: UIAlertAction!) in
             if (alertResult.textFields![0].text != "") {
                 let tip = alertResult.textFields![0].text!
