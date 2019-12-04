@@ -24,6 +24,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     var taxButton:UIButton!
     
     
+    var coverTop:UILabel!   //Cover the top
     var equalSign:UILabel!
     var resultLabel:UILabel!
     var expressionBar:UITextField!
@@ -33,6 +34,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     var backend = BackEnd()
     var main_menu = MainMenu()
     
+    let distanceToBottom:CGFloat = 80
+    let keyboardHeight:CGFloat = 320
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareView()
@@ -40,6 +44,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         
         backend.read()
         imgView.image = drawRectangleOnImage(image: imgData)
+
     }
     
     func prepareView(){
@@ -60,8 +65,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     func drawOperatorBar(){
-        let distanceToBottom:CGFloat = 80
-        
         addButton = getOperator(title: "+", x: 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         addButton.addTarget(self, action: #selector(signButtonAction), for: .touchDown)
         view.addSubview(addButton)
@@ -117,7 +120,15 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         return btn
     }
     
+    func drawCoverTop(){
+        coverTop = UILabel()
+        coverTop.layer.backgroundColor = UIColor.systemBackground.cgColor
+        coverTop.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 75)
+        view.addSubview(coverTop)
+    }
+    
     func drawExpressionBar(){
+        drawCoverTop()
         equalSign = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-90), y: 44, width: 40, height: 30))
         equalSign.text = "     ="
         equalSign.backgroundColor = .systemBackground
@@ -174,15 +185,16 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func doneButtonAction() {
+        
         expressionBar.resignFirstResponder()
         backend.calculation(expressionBar.text!)
         
         updateResult()
-        addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
-        subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
-        multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
-        divButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*3 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
-        undoButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        divButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*3 + 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        undoButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
     }
     
     @objc func bracket(sender: UIBarButtonItem){
@@ -192,11 +204,11 @@ class MainViewController: UIViewController, UITextFieldDelegate {
 
     
     @objc func floatOperationBar(){
-        addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
-        subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
-        multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
-        divButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*3 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
-        undoButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - keyboardHeight - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - keyboardHeight - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - keyboardHeight - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        divButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*3 + 10, y: UIScreen.main.bounds.size.height - keyboardHeight - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        undoButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - keyboardHeight - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
     }
     
     func prepareGestureRecog() {
