@@ -23,6 +23,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     var tipButton:UIButton!
     var taxButton:UIButton!
     
+    var coverTop:UILabel!   //Cover the top
     var equalSign:UILabel!
     var resultLabel:UILabel!
     var expressionBar:UITextField!
@@ -36,9 +37,15 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         prepareView()
         prepareGestureRecog()
+ 
         
         backend.read()
         imgView.image = drawRectangleOnImage(image: imgData)
+<<<<<<< HEAD
+=======
+
+//        create_num_stack()
+>>>>>>> 13c74086bef7d97341f3f3629bc476bc7a4a4267
 
     }
     
@@ -116,7 +123,14 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         btn.backgroundColor = UIColor.lightGray
         return btn
     }
+    func drawCoverTop(){
+        coverTop = UILabel()
+        coverTop.layer.backgroundColor = UIColor.systemBackground.cgColor
+        coverTop.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 75)
+        view.addSubview(coverTop)
+    }
     func drawExpressionBar(){
+        drawCoverTop()
         equalSign = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-90), y: 44, width: 40, height: 30))
         equalSign.text = "     ="
         equalSign.backgroundColor = .systemBackground
