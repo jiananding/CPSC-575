@@ -17,23 +17,25 @@ class MainMenu: NSObject, UITableViewDelegate, UITableViewDataSource{
     
     let menu = UITableView()
     
-    let selection: [String] = ["Currency Exchange", "Unit Convertor"]
+    let selection: [String] = ["Currency Exchange"]
 
     var currentNavigationController: UINavigationController!
     
     func showPicker(own_view: UIView) {
         self.main_view = own_view
-                
+        let swip = UISwipeGestureRecognizer(target: self, action: #selector(handleDismiss))
+        swip.direction = .right
+        menu.addGestureRecognizer(swip)
         blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
         
         main_view.addSubview(blackView)
         main_view.addSubview(menu)
         
-        let width: CGFloat = 300
+        let width: CGFloat = 200
         let x: CGFloat = main_view.frame.width - width
         menu.backgroundColor = UIColor.white
-        menu.frame = CGRect(x: main_view.frame.width, y: 0, width: 300, height: main_view.frame.height)
+        menu.frame = CGRect(x: main_view.frame.width, y: 0, width: 200, height: main_view.frame.height)
         menu.dataSource = self
         menu.delegate = self
         menu.register(UITableViewCell.self, forCellReuseIdentifier: "cell")

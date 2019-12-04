@@ -12,7 +12,7 @@ import Vision
 
 struct Box {
     var position: CGRect
-    var nums: [Double]
+    var nums: [String]
 }
 
 class BackEnd {
@@ -43,13 +43,13 @@ class BackEnd {
                     continue
                 }
                 
-                var arr: [Double] = []
+                var arr: [String] = []
                 let strArr = candidate.string.split(separator: " ")
                 let len = strArr.count
                 for i in 0..<len {
                     if ((String(strArr[i])).isDouble()) {
-                        let k: Double! = Double(strArr[i])
-                        arr.append(k)
+                        //let k: Double! = Double(strArr[i])
+                        arr.append(String(strArr[i]))
                     }
                 }
                 if (!arr.isEmpty) {
@@ -117,7 +117,8 @@ class BackEnd {
 
         for box in real_box_position {
             if box.position.contains(pts) {
-                return String(format: "%.2f", box.nums[0])
+                //return String(format: "%.2f", box.nums[0])
+                return box.nums[0]
             }
         }
         return ""

@@ -13,7 +13,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     var imgData:UIImage!
     var imgView:UIImageView!
     
-    //var expressionBar:UITextView!
     var operatorBarItem:[UIButton]! //Order: 0.Plus, 1.Minus, 2.Multiply, 3.Divide, 4.Undo
     var addButton:UIButton!
     var subButton:UIButton!
@@ -24,11 +23,12 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     var tipButton:UIButton!
     var taxButton:UIButton!
     
-    var coverTop:UILabel!   //Cover the top
+    
     var equalSign:UILabel!
     var resultLabel:UILabel!
     var expressionBar:UITextField!
-    //let expressionBar = UITextView()
+    
+    var hintLabel:UILabel!
     
     var backend = BackEnd()
     var main_menu = MainMenu()
@@ -37,12 +37,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         prepareView()
         prepareGestureRecog()
- 
         
         backend.read()
         imgView.image = drawRectangleOnImage(image: imgData)
-
-//        create_num_stack()
 
     }
     
@@ -52,6 +49,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         drawImageView()
         drawOperatorBar()
         drawExpressionBar()
+        drawHintLabel()
     }
     
     
@@ -63,34 +61,49 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     func drawOperatorBar(){
-        addButton = getOperator(title: "+", x: 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        let distanceToBottom:CGFloat = 80
+        
+        addButton = getOperator(title: "+", x: 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         addButton.addTarget(self, action: #selector(signButtonAction), for: .touchDown)
         view.addSubview(addButton)
         
-        subButton = getOperator(title: "-", x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        subButton = getOperator(title: "-", x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         subButton.addTarget(self, action: #selector(signButtonAction), for: .touchDown)
         view.addSubview(subButton)
         
-        multiButton = getOperator(title: "\u{00D7}", x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        multiButton = getOperator(title: "\u{00D7}", x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         multiButton.addTarget(self, action: #selector(signButtonAction), for: .touchDown)
         view.addSubview(multiButton)
         
         divButton = getOperator(title: "÷", x: UIScreen.main.bounds.size.width/5*3 + 10,
-                                y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+                                y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         divButton.addTarget(self, action: #selector(signButtonAction), for: .touchDown)
         view.addSubview(divButton)
         
-        undoButton = getOperator(title: "←", x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
+        undoButton = getOperator(title: "←", x: UIScreen.main.bounds.size.width/5*4 + 10, y: UIScreen.main.bounds.size.height - distanceToBottom, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         undoButton.addTarget(self, action: #selector(undoButtonAction(sender:)), for: .touchDown)
+        undoButton.backgroundColor = UIColor.darkGray
         view.addSubview(undoButton)
         
         checkMode()
         
         // Add the tip and tax button
-        tipButton = getOperator(title: "tip", x: UIScreen.main.bounds.size.width/5*3 + 10, y: UIScreen.main.bounds.size.height - 50, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-10)), height: 30)
+        tipButton = getOperator(title: "tip", x: view.frame.size.width-CGFloat(50) - 50, y: 44 + 35, width: (view.frame.size.width - (view.frame.size.width-CGFloat(50)-10)), height: 30)
         tipButton.addTarget(self, action: #selector(tipButtonAction(sender:)), for: .touchDown)
         view.addSubview(tipButton)
+        tipButton.backgroundColor = UIColor.darkGray
+        tipButton.isHidden = true
         
+    }
+    
+    func drawHintLabel(){
+        let sizeWidth:CGFloat = 100, sizeHeight:CGFloat = 50
+        hintLabel = UILabel(frame: CGRect(x: (view.frame.size.width / 2 - sizeWidth / 2), y: (view.frame.size.height / 2 - sizeHeight / 2), width: sizeWidth, height: sizeHeight))
+        hintLabel.isHidden = true
+        hintLabel.textAlignment = .center
+        hintLabel.font = UIFont(name: "System", size: 20)
+        hintLabel.backgroundColor = UIColor.systemBackground
+        view.addSubview(hintLabel)
     }
     
     func getOperator(title:String, x:CGFloat, y:CGFloat, width:CGFloat, height:CGFloat) -> UIButton{
@@ -104,14 +117,8 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         btn.backgroundColor = UIColor.lightGray
         return btn
     }
-    func drawCoverTop(){
-        coverTop = UILabel()
-        coverTop.layer.backgroundColor = UIColor.systemBackground.cgColor
-        coverTop.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 75)
-        view.addSubview(coverTop)
-    }
+    
     func drawExpressionBar(){
-        drawCoverTop()
         equalSign = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-90), y: 44, width: 40, height: 30))
         equalSign.text = "     ="
         equalSign.backgroundColor = .systemBackground
@@ -120,43 +127,14 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         expressionBar = UITextField(frame: CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 30))
         expressionBar.keyboardType = UIKeyboardType.decimalPad
         expressionBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 59)
-//        expressionBar.layer.cornerRadius=10
         expressionBar.layer.borderWidth=0
         expressionBar.layer.borderColor=UIColor.darkGray.cgColor
         expressionBar.backgroundColor = .systemBackground
-        expressionBar.textAlignment = .center
+        expressionBar.textAlignment = .right
         expressionBar.text = ""
-        //expressionBar.delegate = self
         expressionBar.font = UIFont(name: "NameOfTheFont", size: 20)
-
-//        expressionBar.isHidden = false
         
         self.view.addSubview(expressionBar)
-        
-//        textView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 80)
-//        textView.keyboardType = UIKeyboardType.decimalPad
-//        textView.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 50)
-//        textView.layer.cornerRadius=10
-//        expressionBar.layer.borderWidth=1
-//        expressionBar.layer.borderColor=UIColor.darkGray.cgColor
-//        expressionBar.backgroundColor = .yellow
-//        expressionBar.textAlignment = .center
-//        expressionBar.text = ""
-//        self.view.addSubview(textView)
-        
-//        expressionExtendBar = UITextField(frame: CGRect(x: 0, y: 0, width: view.frame.size.width-CGFloat(50) - 100, height: 80))
-//        expressionExtendBar.keyboardType = UIKeyboardType.decimalPad
-//        expressionExtendBar.center = CGPoint(x: (view.frame.size.width-CGFloat(50)-100)/2 + 20, y: 50+25)
-//        expressionExtendBar.layer.cornerRadius=10
-//        expressionExtendBar.layer.borderWidth=1
-//        expressionExtendBar.layer.borderColor=UIColor.darkGray.cgColor
-//        expressionExtendBar.backgroundColor = .systemBackground
-//        expressionExtendBar.textAlignment = .center
-//        expressionExtendBar.text = ""
-//
-//        expressionExtendBar.isHidden = true
-//
-//        self.view.addSubview(expressionExtendBar)
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 30))
         doneToolbar.barStyle = .default
@@ -182,6 +160,12 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     
     func updateResult() {
         resultLabel.text = backend.result
+        
+        if Double(backend.result) == 0 {
+            tipButton.isHidden = true
+        }else{
+            tipButton.isHidden = false
+        }
     }
     
     @objc func updateExpressionBar(){
@@ -192,11 +176,8 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     
     @objc func doneButtonAction() {
         expressionBar.resignFirstResponder()
-//        expressionBar.text!.append(" ")
         backend.calculation(expressionBar.text!)
-//        expressionExtendBar.resignFirstResponder()
-//        expressionExtendBar.text!.append(" ")
-//        backend.calculation(expressionExtendBar.text!)
+        
         updateResult()
         addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 130, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
@@ -210,14 +191,8 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         updateResult()
     }
 
-//    @objc func rightBracket(sender: UIBarButtonItem){
-//        expressionBar.text?.append(" " + sender.title!)
-//        backend.calculation(expressionBar.text!)
-//        updateResult()
-//    }
     
     @objc func floatOperationBar(){
-    //func textViewDidBeginEditing(_ textView: UITextView) {
         addButton.frame = CGRect(x: 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         subButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
         multiButton.frame = CGRect(x: UIScreen.main.bounds.size.width/5*2 + 10, y: UIScreen.main.bounds.size.height - 400, width: UIScreen.main.bounds.size.width/5 - 20, height: 50)
@@ -275,9 +250,11 @@ class MainViewController: UIViewController, UITextFieldDelegate {
 //            print("You are tapping \(sender.location(in: self.view))")
 //            print("You are tapping \(getTappedPointOnImg(tappedPoint: sender.location(in: self.view)))")
             var point: CGPoint = sender.location(in: self.view)
+            let xLoc = point.x, yLoc = point.y
             point = getTappedPointOnImg(tappedPoint: point)
-            
-            if (backend.check_box(pts: point) != "") {
+            let result = backend.check_box(pts: point)
+            if (result != "") {
+                displayHint(result, xLoc, yLoc)
                 if (expressionBar.isEditing) {
                     if (!expressionBar.text!.isEmpty) {
                         let cursorPosition = expressionBar.offset(from: expressionBar.beginningOfDocument, to: expressionBar.selectedTextRange!.start)
@@ -385,7 +362,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         subButton.backgroundColor = .lightGray
         multiButton.backgroundColor = .lightGray
         divButton.backgroundColor = .lightGray
-        undoButton.backgroundColor = .lightGray
 
         backend.mode = sender.titleLabel!.text!
         sender.backgroundColor = .cyan
@@ -469,10 +445,21 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    func displayHint(_ hint:String, _ x:CGFloat, _ y:CGFloat){
+        hintLabel.frame.origin.x = x - 50
+        hintLabel.frame.origin.y = y - 75
+        hintLabel.text = hint
+        hintLabel.isHidden = false
+        let seconds = 0.35
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            self.hintLabel.isHidden = true
+        }
+    }
+    
     // Show the total money (adding tips)
     func showTotalAddingTip(_ result:Double) {
         let myResult = String(format: "%.2f", result)
-        let alertResult = UIAlertController(title: "Total", message: "You actually spend " + myResult, preferredStyle: UIAlertController.Style.alert)
+        let alertResult = UIAlertController(title: "Total", message: "You need to pay " + myResult, preferredStyle: UIAlertController.Style.alert)
         let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
         alertResult.addAction(okAction)
         alertResult.preferredAction = okAction
@@ -481,7 +468,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     
     // Individual tip
     func calculateTip(_ result:Double) {
-        let alertResult = UIAlertController(title: "Tip", message: "Enter in percentages", preferredStyle: UIAlertController.Style.alert)
+        let alertResult = UIAlertController(title: "Tips", message: "Enter tips in percentages", preferredStyle: UIAlertController.Style.alert)
         alertResult.addTextField { (textField) -> Void in
                     textField.keyboardType = UIKeyboardType.numberPad
                     textField.placeholder = "Tips"
