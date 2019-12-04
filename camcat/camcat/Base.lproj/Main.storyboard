@@ -63,6 +63,13 @@
                                     <action selector="useLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ynr-Kq-JkG"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="LGU-2w-jDh">
+                                <rect key="frame" x="187" y="428" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="1PU-jC-OV5"/>
+                                    <constraint firstAttribute="height" constant="40" id="2dC-KW-pPz"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -74,6 +81,8 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ZiC-2P-ZlF" secondAttribute="bottom" constant="15" id="LHW-Cj-z8n"/>
                             <constraint firstItem="WPA-8l-wmb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PkE-21-uNC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZiC-2P-ZlF" secondAttribute="trailing" constant="50" id="Pt4-X1-tQm"/>
+                            <constraint firstItem="LGU-2w-jDh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="b2b-pn-KUg"/>
+                            <constraint firstItem="LGU-2w-jDh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="c0O-73-ZoP"/>
                             <constraint firstItem="WPA-8l-wmb" firstAttribute="top" secondItem="fhM-Nu-giK" secondAttribute="bottom" constant="5" id="dhp-eW-yKg"/>
                             <constraint firstItem="ZiC-2P-ZlF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="dkT-h9-d8k"/>
                             <constraint firstItem="Yra-ve-oLv" firstAttribute="baseline" secondItem="fhM-Nu-giK" secondAttribute="baseline" id="gEe-JG-QzG"/>
@@ -85,6 +94,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Q40-DZ-tq1"/>
                     <connections>
+                        <outlet property="activityView" destination="LGU-2w-jDh" id="ExP-ki-Mhr"/>
                         <outlet property="calculateButton" destination="ZiC-2P-ZlF" id="hsf-Xq-m4j"/>
                         <outlet property="cameraButton" destination="fhM-Nu-giK" id="knD-Dd-rQ9"/>
                         <outlet property="imgPreview" destination="WPA-8l-wmb" id="IZe-8M-msd"/>

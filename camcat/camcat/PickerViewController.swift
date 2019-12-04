@@ -26,6 +26,8 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet var calculateButton: UIButton!
     @IBOutlet var libraryButton: UIButton!
     @IBOutlet var cameraButton: UIButton!
+    @IBOutlet var activityView: UIActivityIndicatorView!
+    
     var count = 1
     var camera = Bool() // true for camera, fasle for library
     
@@ -67,8 +69,20 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
             alert.addAction(UIAlertAction(title: "Close", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }else{
-            let mainView = self.storyboard?.instantiateViewController(withIdentifier: "mainView") as! MainViewController
-            self.navigationController?.pushViewController(mainView, animated: true)
+            self.view.bringSubviewToFront(activityView);
+            activityView.isHidden = false
+            activityView.startAnimating()
+            var seconds = 0.1
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                let mainView = self.storyboard?.instantiateViewController(withIdentifier: "mainView") as! MainViewController
+                self.navigationController?.pushViewController(mainView, animated: true)
+            }
+            
+            seconds = 1.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.activityView.isHidden = true
+                self.activityView.stopAnimating()
+            }
         }
     }
     
@@ -106,7 +120,9 @@ class PickerViewController: UIViewController, UINavigationControllerDelegate, UI
         cameraButton.layer.borderWidth = 1
         cameraButton.layer.cornerRadius = 5
         cameraButton.layer.borderColor = UIColor.gray.cgColor
-
+        activityView.color = .systemOrange
+        activityView.transform = CGAffineTransform.init(scaleX: 2, y: 2)
+        activityView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
