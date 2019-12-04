@@ -23,7 +23,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     var tipButton:UIButton!
     var taxButton:UIButton!
     
-    
     var equalSign:UILabel!
     var resultLabel:UILabel!
     var expressionBar:UITextField!
@@ -117,7 +116,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         btn.backgroundColor = UIColor.lightGray
         return btn
     }
-    
     func drawExpressionBar(){
         equalSign = UILabel(frame: CGRect(x: (view.frame.size.width-CGFloat(50)-90), y: 44, width: 40, height: 30))
         equalSign.text = "     ="
