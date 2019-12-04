@@ -40,7 +40,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         
         backend.read()
         imgView.image = drawRectangleOnImage(image: imgData)
-
     }
     
     func prepareView(){
