@@ -6,6 +6,11 @@
 //  Copyright © 2019 Stephen. All rights reserved.
 //
 
+// Reference:
+// www.youtube.com/watch?v=2kwCfFG5fDA
+// exchangeratesapi.io/
+
+
 import UIKit
 
 class Currency_exchange: UIViewController, UITableViewDataSource, UITableViewDelegate{

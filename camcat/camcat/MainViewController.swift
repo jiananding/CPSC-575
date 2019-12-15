@@ -4,6 +4,8 @@
 //
 //  Created by Zilin Ye on 2019-11-01.
 //  Copyright © 2019 Sophia Zhu. All rights reserved.
+
+//  Reference: stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
 //
 
 import UIKit
@@ -35,8 +37,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     var main_menu = MainMenu()
     
     let distanceToBottom:CGFloat = 80
-    let keyboardHeight:CGFloat = 320
+    var keyboardHeight:CGFloat = 320
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareView()
@@ -54,8 +57,15 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         drawOperatorBar()
         drawExpressionBar()
         drawHintLabel()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        if let rect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            keyboardHeight = rect.height
+        }
+    }
     
     func drawImageView(){
         imgView = UIImageView(image: imgData)
@@ -122,7 +132,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     
     func drawCoverTop(){
         coverTop = UILabel()
-        coverTop.layer.backgroundColor = UIColor.systemBackground.cgColor
+        coverTop.backgroundColor = UIColor.systemBackground
         coverTop.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 75)
         view.addSubview(coverTop)
     }
@@ -184,7 +194,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         updateResult()
     }
     
-    @objc func doneButtonAction() {
+    @objc func doneButtonAction(){
         
         expressionBar.resignFirstResponder()
         backend.calculation(expressionBar.text!)
@@ -358,7 +368,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             drawPath.addLine(to: leftDown)
             drawPath.addLine(to: leftUp)
             
-            UIColor.cyan.setStroke()
+            UIColor.orange.setStroke()
             drawPath.lineWidth = 5.0
             drawPath.stroke()
         }
@@ -375,7 +385,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         divButton.backgroundColor = .lightGray
 
         backend.mode = sender.titleLabel!.text!
-        sender.backgroundColor = .cyan
+        sender.backgroundColor = UIColor.init(red: 255.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1)
         
         if (expressionBar.isEditing) {
             expressionBar.insertText(sender.titleLabel!.text!)
@@ -406,17 +416,18 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     //---End Num Button Action---
     
     func checkMode() {
+        let highlightColor = UIColor.init(red: 255.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1)
         switch backend.mode {
         case "+":
-            addButton.backgroundColor = .cyan
+            addButton.backgroundColor = highlightColor
         case "-":
-            addButton.backgroundColor = .cyan
+            addButton.backgroundColor = highlightColor
         case "\u{00D7}":
-            addButton.backgroundColor = .cyan
+            addButton.backgroundColor = highlightColor
         case "÷":
-            addButton.backgroundColor = .cyan
+            addButton.backgroundColor = highlightColor
         case "←":
-            addButton.backgroundColor = .cyan
+            addButton.backgroundColor = highlightColor
         default:
             return
         }

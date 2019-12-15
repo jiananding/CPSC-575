@@ -6,7 +6,8 @@
 //  Copyright © 2019 Stephen. All rights reserved.
 //
 
-// Reference: youtube.com/watch?v=2kwCfFG5fDA
+// Reference:
+// youtube.com/watch?v=2kwCfFG5fDA
 
 import Foundation
 import UIKit

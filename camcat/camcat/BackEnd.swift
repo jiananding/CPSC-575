@@ -6,6 +6,9 @@
 //  Copyright © 2019 Sophia Zhu. All rights reserved.
 //
 
+// Reference:
+// developer.apple.com/videos/play/wwdc2019/234/
+
 import UIKit
 import Foundation
 import Vision
